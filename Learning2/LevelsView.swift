@@ -23,6 +23,8 @@ struct LevelsView: View {
     @State private var levelProgressKat: Int = 1
     @State private var levelProgressHir: Int = 1
     
+    @State private var buttonOffsetY: CGFloat = 40
+    
     @State private var levelSelected: Int = 1
     
     @State private var questions : [[String]] = []
@@ -37,60 +39,17 @@ struct LevelsView: View {
         ZStack{
             
             Color.Beige.edgesIgnoringSafeArea(.all)
+            
             ScrollView(showsIndicators: false){
-   
                 VStack {
                     Spacer()
                     .frame(height: 50)
                     
-                    //>>> MENU >>>
-                    Button(action: {
-                        withAnimation(.easeInOut){
-                            isBack = true
-                            print(isBack)
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            nextPage=true
-                        }
-                        
-                    })  {
-                        Text("menu")
-                            .frame( width: 130,height: 50)
-                            .font(.system(size:30,weight:.bold))
-                            .foregroundColor(Color.white)
-                            .background(Color.Easy)
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                            .offset(y: 0) // Apply the Y offset
-                            }
+                    menuButton()
                     
-                    //<<< MENU <<<
-                    
-                    ForEach(0..<length) { index in
-                        
-                        Button(action: {
-                            withAnimation(.easeInOut) {
-                                levelSelected = index
-                                updateQuestions(index: index)
-                                isForward = true
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
-                                nextPage = true
-                                
-                            }
-                        }){
-                            
-                            CustomButton(data:isKat ? Info.buttonNamesKat[index] : Info.buttonNamesHir[index], isCircle: false, color: color, buttonOffsetY: 40, buttonOffsetX: 0)
-                            }
-                        
-                        
-                            .disabled((isKat && index > levelProgressKat) || (!isKat && index > levelProgressHir))
-                            .opacity((isKat && index > levelProgressKat) || (!isKat && index > levelProgressHir) ? 0.5 : 1.0)
-
-                    }
-                    
-                   
-                    //Button Loop
+                    levelButtons()
                 }
+                
                 Spacer()
                 .frame(height: 200)
                 .fullScreenCover(isPresented: $nextPage){
@@ -115,46 +74,7 @@ struct LevelsView: View {
             //ZStack
         }//var body: some View
     }//struct LevelsView: View
-    
-    func updateQuestions(index: Int) {
-        
-        switch (index, isKat) {
-        case (0, false):
-            questions = [Info.hir_vowels, Info.rom_vowels]
-        case (1, false):
-            questions = [Info.hir_k, Info.rom_k]
-        case (2, false):
-            questions = [Info.hir_s, Info.rom_s]
-        case (3, false):
-            questions = [Info.hir_t, Info.rom_t]
-        case (4, false):
-            questions = [Info.hir_n, Info.rom_n]
-        case (5, false):
-            questions = [Info.hir_h, Info.rom_h]
-        case (6, false):
-            questions = [Info.hir_m, Info.rom_m]
-        case (7, false):
-            questions = [Info.hir_r, Info.rom_r]
-        case (0, true):
-            questions = [Info.kat_vowels, Info.rom_vowels]
-        case (1, true):
-            questions = [Info.kat_k, Info.rom_k]
-        case (2, true):
-            questions = [Info.kat_s, Info.rom_s]
-        case (3, true):
-            questions = [Info.kat_t, Info.rom_t]
-        case (4, true):
-            questions = [Info.kat_n, Info.rom_n]
-        case (5, true):
-            questions = [Info.kat_h, Info.rom_h]
-        case (6, true):
-            questions = [Info.kat_m, Info.rom_m]
-        case (7, true):
-            questions = [Info.kat_r, Info.rom_r]
-        default:
-            questions = [Info.hir_vowels, Info.rom_vowels]
-        }
-    }
+
 
     func updateLevelProgress(index: Int){
         if isKat{
@@ -197,8 +117,58 @@ struct LevelsView: View {
         
     }
     
-
+    func menuButton() -> some View{
+        
+        //>>> MENU >>>
+        Button(action: {
+            withAnimation(.easeInOut){
+                isBack = true
+                buttonOffsetY = -1100
+                
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                nextPage=true
+            }
+            
+        })  {
+            Text("menu")
+                .frame( width: 130,height: 50)
+                .font(.system(size:30,weight:.bold))
+                .foregroundColor(Color.white)
+                .background(Color.Easy)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .offset(y: buttonOffsetY) // Apply the Y offset
+                .offset(x: 0)
+                }
+        
+        //<<< MENU <<<
+    }
     
+    func levelButtons() -> some View{
+        ForEach(0..<length) { index in
+            
+            Button(action: {
+                withAnimation(.easeInOut) {
+                    levelSelected = index
+                    questions = getQuestions(isKat: isKat, level: index)
+                    isForward = true
+                    buttonOffsetY = -1100
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
+                    nextPage = true
+                    
+                }
+            }){
+                
+                CustomButton(data:isKat ? Info.buttonNamesKat[index] : Info.buttonNamesHir[index], isCircle: false, color: color, buttonOffsetY: buttonOffsetY, buttonOffsetX: 0)
+                }
+            
+            
+                .disabled((isKat && index > levelProgressKat) || (!isKat && index > levelProgressHir))
+                .opacity((isKat && index > levelProgressKat) || (!isKat && index > levelProgressHir) ? 0.5 : 1.0)
+
+        }
+    }
     
     struct LevelsView_Previews: PreviewProvider {
         static var previews: some View {

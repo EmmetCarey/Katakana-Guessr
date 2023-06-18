@@ -7,80 +7,63 @@
 
 import Foundation
 
-func getArray() -> [Int] {
-    
-    var kat1 = Info.kat_vowels
-    var kat2 = combineArrays(array1: kat1, array2: Info.kat_k)
-    var kat3 = combineArrays(array1: kat2, array2: Info.kat_s)
-    var kat4 = combineArrays(array1: kat3, array2: Info.kat_t)
-    var kat5 = combineArrays(array1: kat4, array2: Info.kat_n)
-    var kat6 = combineArrays(array1: kat5, array2: Info.kat_h)
-    var kat7 = combineArrays(array1: kat6, array2: Info.kat_m)
-    var kat8 = combineArrays(array1: kat7, array2: Info.kat_r)
-    
-    var rom1 = Info.rom_vowels
-    var rom2 = combineArrays(array1: rom1, array2: Info.rom_k)
-    var rom3 = combineArrays(array1: rom2, array2: Info.rom_s)
-    var rom4 = combineArrays(array1: rom3, array2: Info.rom_t)
-    var rom5 = combineArrays(array1: rom4, array2: Info.rom_n)
-    var rom6 = combineArrays(array1: rom5, array2: Info.rom_h)
-    var rom7 = combineArrays(array1: rom6, array2: Info.rom_m)
-    var rom8 = combineArrays(array1: rom7, array2: Info.rom_r)
+let katTest1 = Info.kat_vowels
+let katTest2 = katTest1 + Info.kat_k
+let katTest3 = katTest2 + Info.kat_s
+let katTest4 = katTest3 + Info.kat_t
+let katTest5 = katTest4 + Info.kat_n
+let katTest6 = katTest5 + Info.kat_h
+let katTest7 = katTest6 + Info.kat_m
+let katTest8 = katTest7 + Info.kat_r
 
-    var hir1 = Info.hir_vowels
-    var hir2 = combineArrays(array1: hir1, array2: Info.hir_k)
-    var hir3 = combineArrays(array1: hir2, array2: Info.hir_s)
-    var hir4 = combineArrays(array1: hir3, array2: Info.hir_t)
-    var hir5 = combineArrays(array1: hir4, array2: Info.hir_n)
-    var hir6 = combineArrays(array1: hir5, array2: Info.hir_h)
-    var hir7 = combineArrays(array1: hir6, array2: Info.hir_m)
-    var hir8 = combineArrays(array1: hir7, array2: Info.hir_r)
-    
-    let level1kat = [kat1, rom1]
-    let level2kat = [kat2, rom2]
-    let level3kat = [kat3, rom3]
-    let level4kat = [kat4, rom4]
-    let level5kat = [kat5, rom5]
-    let level6kat = [kat6, rom6]
-    let level7kat = [kat7, rom7]
-    let level8kat = [kat8, rom8]
-    
-    let level1hir = [hir1, rom1]
-    let level2hir = [hir2, rom2]
-    let level3hir = [hir3, rom3]
-    let level4hir = [hir4, rom4]
-    let level5hir = [hir5, rom5]
-    let level6hir = [hir6, rom6]
-    let level7hir = [hir7, rom7]
-    let level8hir = [hir8, rom8]
-    
-    
+let hirTest1 = Info.hir_vowels
+let hirTest2 = hirTest1 + Info.hir_k
+let hirTest3 = hirTest2 + Info.hir_s
+let hirTest4 = hirTest3 + Info.hir_t
+let hirTest5 = hirTest4 + Info.hir_n
+let hirTest6 = hirTest5 + Info.hir_h
+let hirTest7 = hirTest6 + Info.hir_m
+let hirTest8 = hirTest7 + Info.hir_r
 
-    
+let romTest1 = Info.rom_vowels
+let romTest2 = romTest1 + Info.rom_k
+let romTest3 = romTest2 + Info.rom_s
+let romTest4 = romTest3 + Info.rom_t
+let romTest5 = romTest4 + Info.rom_n
+let romTest6 = romTest5 + Info.rom_h
+let romTest7 = romTest6 + Info.rom_m
+let romTest8 = romTest7 + Info.rom_r
 
-    
-    
-   print(level8kat)
+let katQ1 = [katTest1, romTest1]
+let katQ2 = [katTest2, romTest2]
+let katQ3 = [katTest3, romTest3]
+let katQ4 = [katTest4, romTest4]
+let katQ5 = [katTest5, romTest5]
+let katQ6 = [katTest6, romTest6]
+let katQ7 = [katTest7, romTest7]
+let katQ8 = [katTest8, romTest8]
 
-    
+let hirQ1 = [hirTest1, romTest1]
+let hirQ2 = [hirTest2, romTest2]
+let hirQ3 = [hirTest3, romTest3]
+let hirQ4 = [hirTest4, romTest4]
+let hirQ5 = [hirTest5, romTest5]
+let hirQ6 = [hirTest6, romTest6]
+let hirQ7 = [hirTest7, romTest7]
+let hirQ8 = [hirTest8, romTest8]
 
-    
-    return [0]
-}
+let katTestArray = [katQ1,katQ2,katQ3,katQ4,katQ5,katQ6,katQ7,katQ8]
+let hirTestArray = [hirQ1, hirQ2, hirQ3, hirQ4, hirQ5, hirQ6, hirQ7, hirQ8]
 
-func combineArrays(array1: [String], array2: [String]) -> [String] {
-    // Perform operations on array1 and array2
-    var resultArray : [String] = []
-    
-    let elementsToSelect = array1.count / 2
-    
-    for _ in 0..<elementsToSelect {
-        if let randomElement = array1.randomElement() {
-            // Add selected element to array2
-            resultArray.append(randomElement)
-        }
+func getQuestions(isKat: Bool,level: Int) -> [[String]] {
+
+    if isKat{
+        return katTestArray[level]
     }
-    resultArray+=array2
-    // Return the resulting array
-    return resultArray
+    else{
+        return hirTestArray[level]
+    }
+    
 }
+
+
