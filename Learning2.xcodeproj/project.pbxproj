@@ -23,6 +23,9 @@
 		0D9F522A2A376075009BDEC1 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F52292A376075009BDEC1 /* Button.swift */; };
 		0D9F522C2A376E7B009BDEC1 /* LevelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F522B2A376E7B009BDEC1 /* LevelsView.swift */; };
 		0D9F522E2A37C1F5009BDEC1 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F522D2A37C1F5009BDEC1 /* QuestionView.swift */; };
+		0DB4C1772A4090F600D71EA8 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB4C1762A4090F600D71EA8 /* TestView.swift */; };
+		0DB4C17D2A40926A00D71EA8 /* Info2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB4C17C2A40926A00D71EA8 /* Info2.swift */; };
+		0DB4C17F2A409D5300D71EA8 /* LevelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB4C17E2A409D5300D71EA8 /* LevelTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +66,9 @@
 		0D9F52292A376075009BDEC1 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		0D9F522B2A376E7B009BDEC1 /* LevelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelsView.swift; sourceTree = "<group>"; };
 		0D9F522D2A37C1F5009BDEC1 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
+		0DB4C1762A4090F600D71EA8 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		0DB4C17C2A40926A00D71EA8 /* Info2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info2.swift; sourceTree = "<group>"; };
+		0DB4C17E2A409D5300D71EA8 /* LevelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,10 +120,13 @@
 			isa = PBXGroup;
 			children = (
 				0D9F51F42A373F58009BDEC1 /* Learning2App.swift */,
+				0DB4C17E2A409D5300D71EA8 /* LevelTest.swift */,
 				0D9F51F62A373F58009BDEC1 /* GOView.swift */,
+				0DB4C1762A4090F600D71EA8 /* TestView.swift */,
 				0D9F521F2A373FB9009BDEC1 /* KatHirView.swift */,
 				0D9F522B2A376E7B009BDEC1 /* LevelsView.swift */,
 				0D9F522D2A37C1F5009BDEC1 /* QuestionView.swift */,
+				0DB4C17C2A40926A00D71EA8 /* Info2.swift */,
 				0D9F51F82A373F5B009BDEC1 /* Assets.xcassets */,
 				0D9F51FA2A373F5B009BDEC1 /* Learning2.entitlements */,
 				0D9F51FB2A373F5B009BDEC1 /* Preview Content */,
@@ -286,10 +295,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DB4C17D2A40926A00D71EA8 /* Info2.swift in Sources */,
+				0DB4C1772A4090F600D71EA8 /* TestView.swift in Sources */,
 				0D9F522E2A37C1F5009BDEC1 /* QuestionView.swift in Sources */,
 				0D9F52202A373FB9009BDEC1 /* KatHirView.swift in Sources */,
 				0D9F52222A374AAA009BDEC1 /* ColourExtension.swift in Sources */,
 				0D9F522A2A376075009BDEC1 /* Button.swift in Sources */,
+				0DB4C17F2A409D5300D71EA8 /* LevelTest.swift in Sources */,
 				0D9F52262A374D67009BDEC1 /* MovingText.swift in Sources */,
 				0D9F522C2A376E7B009BDEC1 /* LevelsView.swift in Sources */,
 				0D9F52282A374D7B009BDEC1 /* BackgroundView.swift in Sources */,

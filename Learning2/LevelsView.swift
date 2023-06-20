@@ -10,26 +10,19 @@ import SwiftUI
 struct LevelsView: View {
     
     @State private var nextPage : Bool = false
-    
     @Binding var isKat : Bool
-    
     @State private var isResetKat = false
     @State private var isResetHir = false
-    
     @State private var isBack = false
     @State private var isForward = false
-    
     @State private var level = 0
     @State private var levelProgressKat: Int = 1
     @State private var levelProgressHir: Int = 1
-    
     @State private var buttonOffsetY: CGFloat = 40
-    
     @State private var levelSelected: Int = 1
-    
     @State private var questions : [[String]] = []
     
-    let length = Info.buttonNamesKat.count
+    let length = Info.katNEW1.count
     
     let color = Color.Medium // Button color
     
@@ -37,7 +30,6 @@ struct LevelsView: View {
     var body: some View {
         
         ZStack{
-            
             Color.Beige.edgesIgnoringSafeArea(.all)
             
             ScrollView(showsIndicators: false){
@@ -48,10 +40,12 @@ struct LevelsView: View {
                     menuButton()
                     
                     levelButtons()
+                    
                 }
                 
                 Spacer()
                 .frame(height: 200)
+                
                 .fullScreenCover(isPresented: $nextPage){
                     if isForward{
                         QuestionView(currentLevel: levelSelected, isKat: isKat, questions: questions)
@@ -75,7 +69,7 @@ struct LevelsView: View {
         }//var body: some View
     }//struct LevelsView: View
 
-
+    
     func updateLevelProgress(index: Int){
         if isKat{
             if levelProgressKat == index
@@ -146,7 +140,6 @@ struct LevelsView: View {
     
     func levelButtons() -> some View{
         ForEach(0..<length) { index in
-            
             Button(action: {
                 withAnimation(.easeInOut) {
                     levelSelected = index
@@ -160,7 +153,7 @@ struct LevelsView: View {
                 }
             }){
                 
-                CustomButton(data:isKat ? Info.buttonNamesKat[index] : Info.buttonNamesHir[index], isCircle: false, color: color, buttonOffsetY: buttonOffsetY, buttonOffsetX: 0)
+                CustomButton(data:isKat ? Info.katNEW1[index].joined() : Info.hirNEW1[index].joined(), isCircle: false, color: color, buttonOffsetY: buttonOffsetY, buttonOffsetX: 0)
                 }
             
             

@@ -15,7 +15,7 @@ struct QuestionView: View {
     @State private var score = 0
     @State private var isBack = false
     
-    let limit = 5
+    let limit = 1
     var currentLevel : Int
     var isKat: Bool
     var questions: [[String]]
@@ -47,6 +47,7 @@ struct QuestionView: View {
             }
         }//ZStack
         .onAppear{
+            print(questions)
             generateRandoms()
             print(currentLevel)
             print(UserDefaults.standard.integer(forKey: "levelProgressKat"))
@@ -196,6 +197,6 @@ struct QuestionView: View {
 
 struct QuestionView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView(currentLevel: 1, isKat: true, questions: [Info.kat_vowels,Info.rom_vowels])
+        QuestionView(currentLevel: 1, isKat: true, questions: [Info.katNEW1[0],Info.romNEW1[0]])
     }
 }

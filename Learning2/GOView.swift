@@ -6,19 +6,20 @@ struct GOView: View {
     @State private var buttonOffsetY: CGFloat = 0
     @State private var offset: CGFloat = 600
     @State private var timeOffset = 0.3
-    @State private var backgroundOpacity = 0.0 // New @State variable for opacity
+    @State private var backgroundOpacity = 0.0
 
     var body: some View {
         ZStack {
             Color.Beige.edgesIgnoringSafeArea(.all)
-            BackgroundView() // Use BackgroundView without modifying its opacity directly
-                .opacity(backgroundOpacity) // Apply opacity based on backgroundOpacity state
+            
+            BackgroundView()
+                .opacity(backgroundOpacity)
 
             VStack {
                 Button(action: {
                     withAnimation(.easeInOut) {
                         buttonOffsetY = -offset
-                        backgroundOpacity = 0.0 // Update the background opacity immediately
+                        backgroundOpacity = 0.0
                     }
 
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -29,10 +30,11 @@ struct GOView: View {
                 }
             }
             .onAppear {
+                print(getQuestions(isKat: true, level: 1))
                 withAnimation(.easeInOut) {
                     backgroundOpacity = 1.0 // Update the background opacity immediately
                 }
-                print(getQuestions(isKat: true, level: 0))
+               
             }
             .fullScreenCover(isPresented: $nextPage) {
                 KatHirView()
