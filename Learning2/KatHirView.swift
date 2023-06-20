@@ -19,6 +19,7 @@ struct KatHirView: View {
             
             Color.Beige.edgesIgnoringSafeArea(.all)
             
+            
             VStack {
                 
                 menuButton()

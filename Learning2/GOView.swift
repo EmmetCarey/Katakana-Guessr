@@ -31,8 +31,8 @@ struct GOView: View {
             }
             .onAppear {
                 
-                print(getQuestions(isKat: true, level: 26))
-                
+              
+             
                 withAnimation(.easeInOut) {
                     backgroundOpacity = 1.0 // Update the background opacity immediately
                 }

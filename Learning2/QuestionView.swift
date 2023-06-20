@@ -15,7 +15,7 @@ struct QuestionView: View {
     @State private var score = 0
     @State private var isBack = false
     
-    let limit = 1
+    let limit : Int
     var currentLevel : Int
     var isKat: Bool
     var questions: [[String]]
@@ -197,6 +197,6 @@ struct QuestionView: View {
 
 struct QuestionView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView(currentLevel: 15, isKat: true, questions: [Info.katNEW1[15],Info.romNEW1[15]])
+        QuestionView(limit: 15, currentLevel: 15, isKat: true, questions: [Info.katNEW1[15],Info.romNEW1[15]])
     }
 }
