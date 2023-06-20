@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D006C352A38FE6C007E6647 /* GetLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D006C342A38FE6C007E6647 /* GetLevels.swift */; };
+		0D7C4D6F2A424BE0008FC640 /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7C4D6E2A424BE0008FC640 /* LearnView.swift */; };
 		0D9F51F52A373F58009BDEC1 /* Learning2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F51F42A373F58009BDEC1 /* Learning2App.swift */; };
 		0D9F51F72A373F58009BDEC1 /* GOView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F51F62A373F58009BDEC1 /* GOView.swift */; };
 		0D9F51F92A373F5B009BDEC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D9F51F82A373F5B009BDEC1 /* Assets.xcassets */; };
@@ -23,7 +24,6 @@
 		0D9F522A2A376075009BDEC1 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F52292A376075009BDEC1 /* Button.swift */; };
 		0D9F522C2A376E7B009BDEC1 /* LevelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F522B2A376E7B009BDEC1 /* LevelsView.swift */; };
 		0D9F522E2A37C1F5009BDEC1 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F522D2A37C1F5009BDEC1 /* QuestionView.swift */; };
-		0DB4C17D2A40926A00D71EA8 /* Info2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB4C17C2A40926A00D71EA8 /* Info2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		0D006C342A38FE6C007E6647 /* GetLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLevels.swift; sourceTree = "<group>"; };
+		0D7C4D6E2A424BE0008FC640 /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
 		0D9F51F12A373F58009BDEC1 /* Learning2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Learning2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D9F51F42A373F58009BDEC1 /* Learning2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Learning2App.swift; sourceTree = "<group>"; };
 		0D9F51F62A373F58009BDEC1 /* GOView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GOView.swift; sourceTree = "<group>"; };
@@ -64,7 +65,6 @@
 		0D9F52292A376075009BDEC1 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		0D9F522B2A376E7B009BDEC1 /* LevelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelsView.swift; sourceTree = "<group>"; };
 		0D9F522D2A37C1F5009BDEC1 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
-		0DB4C17C2A40926A00D71EA8 /* Info2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +120,7 @@
 				0D9F521F2A373FB9009BDEC1 /* KatHirView.swift */,
 				0D9F522B2A376E7B009BDEC1 /* LevelsView.swift */,
 				0D9F522D2A37C1F5009BDEC1 /* QuestionView.swift */,
-				0DB4C17C2A40926A00D71EA8 /* Info2.swift */,
+				0D7C4D6E2A424BE0008FC640 /* LearnView.swift */,
 				0D9F51F82A373F5B009BDEC1 /* Assets.xcassets */,
 				0D9F51FA2A373F5B009BDEC1 /* Learning2.entitlements */,
 				0D9F51FB2A373F5B009BDEC1 /* Preview Content */,
@@ -289,7 +289,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DB4C17D2A40926A00D71EA8 /* Info2.swift in Sources */,
 				0D9F522E2A37C1F5009BDEC1 /* QuestionView.swift in Sources */,
 				0D9F52202A373FB9009BDEC1 /* KatHirView.swift in Sources */,
 				0D9F52222A374AAA009BDEC1 /* ColourExtension.swift in Sources */,
@@ -299,6 +298,7 @@
 				0D9F52282A374D7B009BDEC1 /* BackgroundView.swift in Sources */,
 				0D9F51F72A373F58009BDEC1 /* GOView.swift in Sources */,
 				0D9F52242A374BD9009BDEC1 /* Info.swift in Sources */,
+				0D7C4D6F2A424BE0008FC640 /* LearnView.swift in Sources */,
 				0D9F51F52A373F58009BDEC1 /* Learning2App.swift in Sources */,
 				0D006C352A38FE6C007E6647 /* GetLevels.swift in Sources */,
 			);

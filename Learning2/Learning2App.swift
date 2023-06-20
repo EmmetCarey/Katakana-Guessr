@@ -11,7 +11,7 @@ import SwiftUI
 struct Learning2App: App {
     var body: some Scene {
         WindowGroup {
-            GOView()
+            LearnView(isKat: .constant(true))
         }
     }
 }

@@ -107,6 +107,7 @@ struct LevelsView: View {
     }//struct LevelsView: View
 
     func infiniteButton(index: Int) -> some View{
+        
         Button(action: {
             withAnimation(.easeInOut) {
                 
