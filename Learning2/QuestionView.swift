@@ -47,9 +47,11 @@ struct QuestionView: View {
             }
         }//ZStack
         .onAppear{
+            print(currentLevel,"DFGHJHGFDFGH")
             print(questions)
+            print(questionSymbol,"HIII")
+            print(answerRom,"<==")
             generateRandoms()
-            print(currentLevel)
             print(UserDefaults.standard.integer(forKey: "levelProgressKat"))
         }
     }//var body: some View
@@ -105,7 +107,7 @@ struct QuestionView: View {
             .font(.system(size: 80, weight: .bold))
             .offset(y: 0)
             .foregroundColor(.white)
-            .frame( width: 130,height: 130)
+            .frame(width: currentLevel > 14 ? 170 : 130, height: 130)
             .background(Color.Medium)
             .clipShape(RoundedRectangle(cornerRadius: 20))
     }
@@ -169,10 +171,8 @@ struct QuestionView: View {
     
     func generateRandoms(){
         
-        print(questions[0])
-        print(questions[1])
         let randomIndices = questions[0].indices.shuffled().prefix(4)
-        print(randomIndices)
+        
         let resultArray = randomIndices.map { index in
             guard index < questions[1].count else {
                 fatalError("Index out of range for allRoms array: \(index)")
@@ -181,13 +181,13 @@ struct QuestionView: View {
         }
     
         answerRom = resultArray.randomElement() ?? ""
-        
+        print(answerRom)
         if let index = questions[1].firstIndex(of: answerRom) {
             questionSymbol = questions[0][index]
         } else {
             questionSymbol = ""
         }
-        
+       
         choiceArray = resultArray
         print(choiceArray)
         
@@ -197,6 +197,6 @@ struct QuestionView: View {
 
 struct QuestionView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView(currentLevel: 1, isKat: true, questions: [Info.katNEW1[0],Info.romNEW1[0]])
+        QuestionView(currentLevel: 15, isKat: true, questions: [Info.katNEW1[15],Info.romNEW1[15]])
     }
 }

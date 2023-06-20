@@ -10,7 +10,9 @@ import SwiftUI
 struct LevelsView: View {
     
     @State private var nextPage : Bool = false
+    
     @Binding var isKat : Bool
+    
     @State private var isResetKat = false
     @State private var isResetHir = false
     @State private var isBack = false
@@ -22,8 +24,9 @@ struct LevelsView: View {
     @State private var levelSelected: Int = 1
     @State private var questions : [[String]] = []
     
-    let length = Info.katNEW1.count
     
+    let length = Info.katNEW1.count
+    //let length = 10
     let color = Color.Medium // Button color
     
     
@@ -58,6 +61,7 @@ struct LevelsView: View {
             }//ScrollView
             
             .onAppear{
+                print(length)
                 initializeLevelProgressKat(isReset:isResetKat)
                 initializeLevelProgressHir(isReset:isResetHir)
                 if isResetHir || isResetKat{

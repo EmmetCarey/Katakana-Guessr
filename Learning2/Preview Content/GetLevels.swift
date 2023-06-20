@@ -155,13 +155,16 @@ let allK = [kQ1, kQ2, kQ3, kQ4, kQ5, kQ6, kQ7, kQ8, kQ9, kQ10, kQ11, kQ12, kQ13,
 let allH = [hQ1, hQ2, hQ3, hQ4, hQ5, hQ6, hQ7, hQ8, hQ9, hQ10, hQ11, hQ12, hQ13, hQ14, hQ15, hQ16, hQ17, hQ18, hQ19, hQ20, hQ21, hQ22, hQ23, hQ24, hQ25, hQ26, hQ27]
 
 
+let allK1 = Info.katNEW1.enumerated().map { [$0.element, Info.romNEW1[$0.offset]] }
+let allH1 = Info.hirNEW1.enumerated().map { [$0.element, Info.romNEW1[$0.offset]] }
+
 func getQuestions(isKat: Bool,level: Int) -> [[String]] {
 
     if isKat{
-        return allK[level]
+        return allK1[level]
     }
     else{
-        return allH[level]
+        return allH1[level]
     }
     
 }
