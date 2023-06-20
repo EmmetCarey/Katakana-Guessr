@@ -25,9 +25,8 @@ struct LearnView: View {
             ScrollView(showsIndicators: false){
                 Spacer().frame(height: 50)
                 VStack {
-                    createRow(start: 0, end: 10)
-                    Spacer().frame(height: 50)
                     menuButton()
+                    createRow(start: 0, end: 10)
                     Spacer().frame(height: 100)
                 }.fullScreenCover(isPresented: $nextPage){
                     GOView()
