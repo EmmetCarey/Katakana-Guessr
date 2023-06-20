@@ -138,6 +138,7 @@ struct QuestionView: View {
         
         if answer == answerRom{
             score+=1
+            
             generateRandoms()
         }else{
             score=0
@@ -147,26 +148,29 @@ struct QuestionView: View {
             var levelProgressKat = UserDefaults.standard.integer(forKey: "levelProgressKat")
             levelProgressKat+=1
             UserDefaults.standard.set(levelProgressKat, forKey: "levelProgressKat")
-            
+            questionSymbol = ""
+            choiceArray = ["", "", "", ""]
             goNextPage()
             
         }
-        if score == limit && !isKat && currentLevel == UserDefaults.standard.integer(forKey: "levelProgressHir"){
+        else if score == limit && !isKat && currentLevel == UserDefaults.standard.integer(forKey: "levelProgressHir"){
             var levelProgressHir = UserDefaults.standard.integer(forKey: "levelProgressHir")
             levelProgressHir+=1
             UserDefaults.standard.set(levelProgressHir, forKey: "levelProgressHir")
-
+            questionSymbol = ""
+            choiceArray = ["", "", "", ""]
             goNextPage()
         }
-        if score == limit && currentLevel != UserDefaults.standard.integer(forKey: "levelProgressHir") || score == limit && currentLevel != UserDefaults.standard.integer(forKey: "levelProgressKat"){
-            
-            goNextPage()
+       else if score == limit && currentLevel != UserDefaults.standard.integer(forKey: "levelProgressHir") || score == limit && currentLevel != UserDefaults.standard.integer(forKey: "levelProgressKat"){
+           questionSymbol = ""
+           choiceArray = ["", "", "", ""]
+           goNextPage()
         }
+        
     }
     
     func goNextPage(){
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            nextPage = true}
+            nextPage = true
     }
     
     func generateRandoms(){
@@ -189,7 +193,7 @@ struct QuestionView: View {
         }
        
         choiceArray = resultArray
-        print(choiceArray)
+        print(choiceArray,"dfghjkhgf")
         
         
     }
@@ -197,6 +201,6 @@ struct QuestionView: View {
 
 struct QuestionView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView(limit: 15, currentLevel: 15, isKat: true, questions: [Info.katNEW1[15],Info.romNEW1[15]])
+        QuestionView(limit: 3, currentLevel: 3, isKat: true, questions: [Info.katNEW1[1],Info.romNEW1[1]])
     }
 }

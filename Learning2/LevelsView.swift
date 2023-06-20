@@ -9,13 +9,11 @@ import SwiftUI
 
 struct LevelsView: View {
     
-    @State private var nextPage : Bool = false
-    
     @Binding var isKat : Bool
     
+    @State private var nextPage : Bool = false
     @State private var isResetKat = false
     @State private var isResetHir = false
-    
     @State private var isBack = false
     @State private var isForward = false
     @State private var level = 1
@@ -26,13 +24,7 @@ struct LevelsView: View {
     @State private var questions : [[String]] = []
     @State private var limit = 1
     @State private var backgroundOpacity = 0.2
-    
-    
-    //let length = 10
-    let red = Color.Medium // Button color
-    
-    
-    
+
     var body: some View {
         
         ZStack{
@@ -41,7 +33,7 @@ struct LevelsView: View {
 
             ScrollView(showsIndicators: false){
                 
-                VStack{
+                VStack {
                     
                     Spacer().frame(height: 50)
                     
@@ -54,7 +46,6 @@ struct LevelsView: View {
                         menuButton()
                     }
                 }
-                
                 VStack {
                     
                     Spacer().frame(height: 50)
@@ -74,7 +65,6 @@ struct LevelsView: View {
                     levelButtons(start: 12, end: 17, color: Color.Medium)
                     
                 }
-                
                 VStack {
                     
                     testButton(index: 17, level: 17, name: "Test 4", color: Color.BlueEasy, levels: [12,13,14,15,16])
@@ -95,9 +85,8 @@ struct LevelsView: View {
                     
                     testButton(index: 33, level: 33, name: "Test 6", color: Color.BlueEasy, levels: [31,32,33])
                      
+                    Spacer().frame(height: 200)
                 }
-                Spacer()
-                .frame(height: 200)
                 
                 .fullScreenCover(isPresented: $nextPage){
                     if isForward{
@@ -109,14 +98,8 @@ struct LevelsView: View {
                 }
                 
             }
-            
             .onAppear{
-                
-                initializeLevelProgressKat(isReset:isResetKat)
-                initializeLevelProgressHir(isReset:isResetHir)
-                if isResetHir || isResetKat{
-                    print("RESET IS ON RESET IS ON RESET IS ON RESET IS ON RESET IS ON RESET IS ON ")
-                }
+                initializeLevelProgress(isKat: isKat, isReset:isResetKat)
             }
                 
             //ZStack
@@ -209,7 +192,6 @@ struct LevelsView: View {
         }
     }
     
-    
     func updateLevelProgress(index: Int){
         if isKat{
             if levelProgressKat == index
@@ -229,27 +211,25 @@ struct LevelsView: View {
         }
     }
     
-    func initializeLevelProgressKat(isReset: Bool) {
+    func initializeLevelProgress(isKat: Bool, isReset: Bool) {
+        if isKat{
             if isReset || UserDefaults.standard.object(forKey: "levelProgressKat") == nil {
                 levelProgressKat = 0
                 UserDefaults.standard.set(levelProgressKat, forKey: "levelProgressKat")
             } else {
                 levelProgressKat = UserDefaults.standard.integer(forKey: "levelProgressKat")
+                
+            }
+        }
+        if !isKat{
+            if isReset || UserDefaults.standard.object(forKey: "levelProgressHir") == nil {
+                levelProgressHir = 0
+                UserDefaults.standard.set(levelProgressHir, forKey: "levelProgressHir")
+            }else{
+                levelProgressHir = UserDefaults.standard.integer(forKey: "levelProgressHir")
                
             }
         }
-    
-    func initializeLevelProgressHir(isReset: Bool){
-        
-        if isReset || UserDefaults.standard.object(forKey: "levelProgressHir") == nil {
-            levelProgressHir = 0
-            UserDefaults.standard.set(levelProgressHir, forKey: "levelProgressHir")
-        }else{
-            levelProgressHir = UserDefaults.standard.integer(forKey: "levelProgressHir")
-           
-        }
-        
-        
     }
     
     func menuButton() -> some View{
@@ -278,8 +258,7 @@ struct LevelsView: View {
         
         //<<< MENU <<<
     }
-    
-    
+
     struct LevelsView_Previews: PreviewProvider {
         static var previews: some View {
             LevelsView(isKat: .constant(true))
