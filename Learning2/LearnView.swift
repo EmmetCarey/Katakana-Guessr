@@ -13,6 +13,10 @@ struct LearnView: View {
     @State private var isRom: [[Bool]] = Array(repeating: Array(repeating: false, count: Info.katList.count), count: Info.katList.count)
     
     @State private var nextPage : Bool = false
+    @State private var isShowing : Bool = true
+    @State private var opacity : CGFloat = 1
+    @State private var offsetY : CGFloat = 0
+    
     @State private var width: CGFloat = 80
     
     var body: some View {
@@ -20,30 +24,44 @@ struct LearnView: View {
             
             Color.Beige.edgesIgnoringSafeArea(.all)
       
-            BackgroundView()
-                .opacity(0.06)
+           
             
             ScrollView(showsIndicators: false){
-                Spacer().frame(height: 50)
-                VStack {
+               
+                VStack{
+                    Spacer().frame(height: 50)
                     menuButton()
+                    Spacer().frame(height: 60)
+                    getLabel2(label: "Monographs")
+                }
+                VStack {
+                   
                     createRow(start: 0, end: 10, big: false)
                     Spacer().frame(height: 100)
+                    getLabel2(label: "Diacritics")
                     createRow(start: 10, end: 14, big : false)
                     Spacer().frame(height: 100)
-                    createRow(start: 14, end: 17, big : true)
-                    Spacer().frame(height: 50)
-                    createRow(start: 17, end: 20, big : true)
-                    Spacer().frame(height: 50)
-                    createRow(start: 20, end: 23, big : true)
+                    
+                    
                    
-                }.fullScreenCover(isPresented: $nextPage){
+                }
+                VStack{
+                    getLabel2(label: "Diagraphs")
+                    createRow(start: 14, end: 17, big : true)
+                    Spacer().frame(height: 20)
+                    createRow(start: 17, end: 20, big : true)
+                    Spacer().frame(height: 20)
+                    createRow(start: 20, end: 23, big : true)
+                }
+                .frame(maxWidth: .infinity)
+                .fullScreenCover(isPresented: $nextPage){
                     KatHirView()
                 }
                 VStack{
                     Spacer().frame(height: 50)
                     createRow(start: 23, end: 27, big : true)
                 }
+                .frame(maxWidth: .infinity)
             }
             
         }
@@ -60,8 +78,22 @@ struct LearnView: View {
         }
     }
     
+    func getLabel2(label: String) -> some View{
+        
+        Text(label)
+            .frame(width:  200 , height: 50 )
+            .font(.system(size: 30,weight:.bold))
+            .foregroundColor(Color.white)
+            .background(Color.Medium)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .opacity(opacity)
+        
+        
+        
+    }
     func createButton(labelKat: String, labelRom: String, x: Int, y: Int ,big: Bool) -> some View {
         Button(action: {
+            
             isRom[x][y].toggle()
             withAnimation(.easeInOut) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -70,11 +102,13 @@ struct LearnView: View {
             }
         }) {
             Text(isRom[x][y] ? labelRom : labelKat)
-                .frame(width: !big ? 60 : 75, height: 60)
-                .font(.system(size: !big ? 35: 32, weight: .bold))
+                .frame(width: !big ? 60 : 60, height: 60)
+                .font(.system(size: !big ? 35: 29, weight: .bold))
                 .foregroundColor(Color.white)
-                .background(Color.Medium)
+                .background(Color.Easy)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
+                .opacity( opacity)
+            
         }.buttonStyle(PlainButtonStyle())
     }
     
@@ -83,8 +117,14 @@ struct LearnView: View {
         
         //>>> MENU >>>
         Button(action: {
-            withAnimation(.easeInOut){
-                nextPage=true
+            
+            
+            offsetY = -200
+            withAnimation(.easeInOut(duration: 0.2)){
+                opacity = 0
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    nextPage = true
+                }
             }
             
         })  {
@@ -94,9 +134,10 @@ struct LearnView: View {
                 .foregroundColor(Color.white)
                 .background(Color.Easy)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
-                .offset(y: 10) // Apply the Y offset
+                .offset(y: 10+offsetY) // Apply the Y offset
                 .offset(x:0)
         }
+        
         //<<< MENU <<<
     }
     
