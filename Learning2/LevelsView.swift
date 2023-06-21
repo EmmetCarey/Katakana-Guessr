@@ -19,12 +19,23 @@ struct LevelsView: View {
     @State private var level = 1
     @State private var levelProgressKat: Int = 1
     @State private var levelProgressHir: Int = 1
+    
+    @State private var left: CGFloat = -1
+    @State private var right: CGFloat = 1
+    
     @State private var buttonOffsetY: CGFloat = 0
+    @State private var buttonOffsetX: CGFloat = 0
+    
+    @State private var offset: CGFloat = 700
+    
     @State private var levelSelected: Int = 1
     @State private var questions : [[String]] = []
     @State private var limit = 1
     @State private var backgroundOpacity = 0.2
-
+    
+    @State private var moveButtons : Bool = false
+    
+    
     var body: some View {
         
         ZStack{
@@ -45,7 +56,8 @@ struct LevelsView: View {
                     }else{
                         menuButton()
                     }
-                }
+                    
+                }.frame(maxWidth: .infinity)
                 VStack {
                     
                     Spacer().frame(height: 50)
@@ -64,7 +76,7 @@ struct LevelsView: View {
             
                     levelButtons(start: 12, end: 17, color: Color.Medium)
                     
-                }
+                }.frame(maxWidth: .infinity)
                 VStack {
                     
                     testButton(index: 17, level: 17, name: "Test 4", color: Color.BlueEasy, levels: [12,13,14,15,16])
@@ -86,14 +98,14 @@ struct LevelsView: View {
                     testButton(index: 33, level: 33, name: "Test 6", color: Color.BlueEasy, levels: [31,32,33])
                      
                     Spacer().frame(height: 200)
-                }
+                }.frame(maxWidth: .infinity)
                 
                 .fullScreenCover(isPresented: $nextPage){
                     if isForward{
                         QuestionView(limit: limit, currentLevel: levelSelected, isKat: isKat, questions: questions)
                     }
                     if isBack{
-                        GOView()
+                        KatHirView()
                     }
                 }
                 
@@ -113,9 +125,11 @@ struct LevelsView: View {
                 
                 levelSelected = index
                 questions = getTest(isKat: isKat, levels: [0,1,2,4,5,6,8,9,10,12,13,14,15,16,18,19,20,22,23,24,26,27,28,30,31,32])
+                moveButtons = true
                 isForward = true
-                buttonOffsetY = -800
+                buttonOffsetX = offset
                 limit = 100
+                
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
                 nextPage = true
@@ -129,7 +143,7 @@ struct LevelsView: View {
                 .background(Color.Hard)
                 .clipShape(RoundedRectangle(cornerRadius: 5))
                 .offset(y: 0) // Apply the Y offset
-                .offset(x: buttonOffsetY)
+                .offset(x: (moveButtons) ? -offset : 0)
                 }
             .disabled((isKat && index > levelProgressKat) || (!isKat && index > levelProgressHir))
             .opacity((isKat && index > levelProgressKat) || (!isKat && index > levelProgressHir) ? 0.5 : 1.0)
@@ -144,7 +158,7 @@ struct LevelsView: View {
                 levelSelected = index
                 questions = getTest(isKat: isKat, levels: levels)
                 isForward = true
-                buttonOffsetY = 800
+                buttonOffsetX = offset
                 limit = 30
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
@@ -154,12 +168,12 @@ struct LevelsView: View {
         }){
             Text(name)
                 .frame( width: 250,height: 70)
-                .font(.system(size:30,weight:.bold))
+                .font(.system(size:40,weight:.bold))
                 .foregroundColor(Color.white)
                 .background(color)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .offset(y: 0) // Apply the Y offset
-                .offset(x: buttonOffsetY)
+                .offset(x: (moveButtons) ? offset * (index % 2 == 0 ? 1 : -1) : 0)
                 }
             .disabled((isKat && index > levelProgressKat) || (!isKat && index > levelProgressHir))
             .opacity((isKat && index > levelProgressKat) || (!isKat && index > levelProgressHir) ? 0.5 : 1.0)
@@ -167,7 +181,7 @@ struct LevelsView: View {
     }
     
     func levelButtons(start: Int, end: Int, color: Color) -> some View{
-        
+   
         ForEach(start..<end) { index in
             Button(action: {
                 withAnimation(.easeInOut) {
@@ -175,16 +189,36 @@ struct LevelsView: View {
                     levelSelected = index
                     questions = getQuestions(isKat: isKat, level: index)
                     isForward = true
-                    buttonOffsetY = -800
+                    buttonOffsetX = offset
+                    moveButtons = true
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
                     nextPage = true
                     
                 }
             }){
+                Text(isKat ? Info.katNEW1[index].joined() : Info.hirNEW1[index].joined())
+                    .frame( width: 250,height: 70)
+                    .font(.system(size:40,weight:.bold))
+                    .foregroundColor(Color.white)
+                    .background(color)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .offset(y: 0) // Apply the Y offset
+                    //.offset(x:(moveButtons) ? ((index % 2 == 0) ? buttonOffsetX * right : buttonOffsetX * left) : 0)
+                    .offset(x: (moveButtons) ? offset * (index % 2 == 0 ? 1 : -1) : 0)
+                    .padding(5)
+
+                    }
+            
+            /*{
                 
-                CustomButton(data:isKat ? Info.katNEW1[index].joined() : Info.hirNEW1[index].joined(), isCircle: false, color: color, buttonOffsetY: 0, buttonOffsetX: buttonOffsetY)
+                CustomButton(data:isKat ? Info.katNEW1[index].joined() : Info.hirNEW1[index].joined(),
+                             isCircle: false,
+                             color: color,
+                             buttonOffsetY: 0,
+                             buttonOffsetX: (moveButtons) ? ((index % 2 == 0) ? buttonOffsetX * right : buttonOffsetX * left) : 0)
                 }
+             */
             
             
                 .disabled((isKat && index > levelProgressKat) || (!isKat && index > levelProgressHir))
@@ -192,6 +226,36 @@ struct LevelsView: View {
 
         }
     }
+    
+    func menuButton() -> some View{
+        
+        //>>> MENU >>>
+        Button(action: {
+            withAnimation(.easeInOut){
+                
+                isBack = true
+                buttonOffsetY = -400
+                moveButtons = true
+                
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                nextPage=true
+            }
+            
+        })  {
+            Text("menu")
+                .frame( width: 130,height: 50)
+                .font(.system(size:30,weight:.bold))
+                .foregroundColor(Color.white)
+                .background(Color.Easy)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .offset(y: (moveButtons) ? -600 : 0)
+                .offset(x: 0)
+                }
+        
+        //<<< MENU <<<
+    }
+
     
     func updateLevelProgress(index: Int){
         if isKat{
@@ -233,33 +297,7 @@ struct LevelsView: View {
         }
     }
     
-    func menuButton() -> some View{
-        
-        //>>> MENU >>>
-        Button(action: {
-            withAnimation(.easeInOut){
-                isBack = true
-                buttonOffsetY = -800
-                
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                nextPage=true
-            }
-            
-        })  {
-            Text("menu")
-                .frame( width: 130,height: 50)
-                .font(.system(size:30,weight:.bold))
-                .foregroundColor(Color.white)
-                .background(Color.Easy)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .offset(y: 0) // Apply the Y offset
-                .offset(x: buttonOffsetY)
-                }
-        
-        //<<< MENU <<<
-    }
-
+    
     struct LevelsView_Previews: PreviewProvider {
         static var previews: some View {
             LevelsView(isKat: .constant(true))

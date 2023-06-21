@@ -13,6 +13,7 @@ struct LearnView: View {
     @State private var isRom: [[Bool]] = Array(repeating: Array(repeating: false, count: Info.katList.count), count: Info.katList.count)
     
     @State private var nextPage : Bool = false
+    @State private var width: CGFloat = 80
     
     var body: some View {
         ZStack{
@@ -26,28 +27,40 @@ struct LearnView: View {
                 Spacer().frame(height: 50)
                 VStack {
                     menuButton()
-                    createRow(start: 0, end: 10)
+                    createRow(start: 0, end: 10, big: false)
                     Spacer().frame(height: 100)
+                    createRow(start: 10, end: 14, big : false)
+                    Spacer().frame(height: 100)
+                    createRow(start: 14, end: 17, big : true)
+                    Spacer().frame(height: 50)
+                    createRow(start: 17, end: 20, big : true)
+                    Spacer().frame(height: 50)
+                    createRow(start: 20, end: 23, big : true)
+                   
                 }.fullScreenCover(isPresented: $nextPage){
-                    GOView()
+                    KatHirView()
+                }
+                VStack{
+                    Spacer().frame(height: 50)
+                    createRow(start: 23, end: 27, big : true)
                 }
             }
             
         }
     }
     
-    func createRow(start: Int, end: Int) -> some View {
+    func createRow(start: Int, end: Int, big: Bool) -> some View {
         ForEach(start..<end) { x in
             Spacer().frame(height: 40)
             HStack {
                 ForEach(0..<Info.katList[x].count) { y in
-                    createButton(labelKat: isKat ? Info.katList[x][y] : Info.hirList[x][y], labelRom: Info.romList[x][y], x: x, y: y)
+                    createButton(labelKat: isKat ? Info.katList[x][y] : Info.hirList[x][y], labelRom: Info.romList[x][y], x: x, y: y, big: big)
                 }
             }
         }
     }
     
-    func createButton(labelKat: String, labelRom: String, x: Int, y: Int) -> some View {
+    func createButton(labelKat: String, labelRom: String, x: Int, y: Int ,big: Bool) -> some View {
         Button(action: {
             isRom[x][y].toggle()
             withAnimation(.easeInOut) {
@@ -57,8 +70,8 @@ struct LearnView: View {
             }
         }) {
             Text(isRom[x][y] ? labelRom : labelKat)
-                .frame(width:  !isRom[x][y] ? 60 : 65 , height: !isRom[x][y] ? 60 : 65 )
-                .font(.system(size: !isRom[x][y] ? 35 : 50 , weight: .bold))
+                .frame(width: !big ? 60 : 75, height: 60)
+                .font(.system(size: !big ? 35: 32, weight: .bold))
                 .foregroundColor(Color.white)
                 .background(Color.Medium)
                 .clipShape(RoundedRectangle(cornerRadius: 20))

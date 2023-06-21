@@ -8,8 +8,7 @@ struct KatHirView: View {
     @State private var isBack = false
     @State private var isTest = false
     
-    @State private var button1OffsetX: CGFloat = 0
-    @State private var button2OffsetX: CGFloat = 0
+    @State private var buttonOffsetX: CGFloat = 0
     
     @State private var width: CGFloat = 150
     @State private var height: CGFloat = 50
@@ -17,6 +16,10 @@ struct KatHirView: View {
     @State private var color: Color = Color.Easy
     @State private var offset: CGFloat = 500
     @State private var timeOffset = 0.3
+    
+    @State private var left: CGFloat = -1
+    @State private var right: CGFloat = 1
+    
     
     
     var body: some View {
@@ -26,16 +29,32 @@ struct KatHirView: View {
             
             
             VStack {
+                
+                getLabel2(label: "Katakana",direction: right)
+                getButton2(label: "Learn", test: false, kat: true,direction: left)
+                getButton2(label: "Test", test: true, kat: true,direction: right)
+                
+                getLabel2(label: "Hiragana",direction: left)
+                getButton2(label: "Learn", test: false, kat: false,direction: right)
+                getButton2(label: "Test", test: true, kat: false,direction: left)
+                
+                
+                /*
                 Spacer().frame(height: 50)
-                menuButton()
                 getLabel(label: "Katakana")
+                Spacer().frame(height: 50)
                 katButton(label: "Learn", type: false)
                 katButton(label: "Test", type: true)
                 
                 Spacer().frame(height: 50)
                 getLabel(label: "Hiragana")
-                hirButton(label: "Learn", type: true)
+                Spacer().frame(height: 50)
+                hirButton(label: "Learn", type: false)
                 hirButton(label: "Test", type: true)
+                */
+            }
+                
+                
                 
             }
             .fullScreenCover(isPresented: $nextPage){
@@ -54,9 +73,51 @@ struct KatHirView: View {
                 }
                 
             }
-        }
+        
     }
     
+    func moveButtons(){
+        buttonOffsetX = 400
+    }
+    
+    func getLabel2(label: String, direction: CGFloat) -> some View{
+        
+        Text(label)
+            .frame(width:  200 , height: 50 )
+            .font(.system(size: 30,weight:.bold))
+            .foregroundColor(Color.white)
+            .background(Color.Medium)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .offset(x:buttonOffsetX*direction)
+        
+        
+        
+    }
+    
+    func getButton2(label: String, test: Bool, kat: Bool, direction: CGFloat) -> some View{
+        
+        Button(action:{
+            withAnimation(.easeInOut(duration: 0.5)){
+                moveButtons()
+                isKat = kat
+                isTest = test
+                DispatchQueue.main.asyncAfter(deadline: .now() + timeOffset) {
+                    nextPage=true
+                }
+            }
+        }){
+            Text(label)
+                .frame(width:  width , height: height )
+                .font(.system(size: fontSize , weight: .bold))
+                .foregroundColor(Color.white)
+                .background(color)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .offset(x:buttonOffsetX*direction)
+            
+        }
+        
+    }
+    /*
     func getLabel(label: String) -> some View{
         Text(label)
             .frame(width:  200 , height: 50 )
@@ -64,34 +125,7 @@ struct KatHirView: View {
             .foregroundColor(Color.white)
             .background(Color.Medium)
             .clipShape(RoundedRectangle(cornerRadius: 20))
-            .offset(x:button2OffsetX)
-    }
-    
-    func menuButton() -> some View{
-        
-        //>>> MENU >>>
-        Button(action: {
-            withAnimation(.easeInOut){
-                button1OffsetX = -offset
-                button2OffsetX = offset
-                isBack = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + timeOffset) {
-                nextPage=true
-            }
-            
-        })  {
-            Text("menu")
-                .frame( width: 130,height: 50)
-                .font(.system(size:30,weight:.bold))
-                .foregroundColor(Color.white)
-                .background(Color.Easy)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .offset(y: -100) // Apply the Y offset
-                .offset(x: button2OffsetX)
-            
-        }
-        //<<< MENU <<<
+            .offset(x:buttonOffsetX)
     }
     
     func katButton(label: String, type: Bool) -> some View{
@@ -146,7 +180,7 @@ struct KatHirView: View {
         }
         // <<<<HIR BUTTON <<<<<
         
-        
+        */
     }
     
     struct KatHirView_Previews: PreviewProvider {
@@ -155,4 +189,4 @@ struct KatHirView: View {
         }
     }
   
-}
+

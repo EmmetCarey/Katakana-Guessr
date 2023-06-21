@@ -34,7 +34,9 @@ struct GOView: View {
               
              
                 withAnimation(.easeInOut) {
-                    backgroundOpacity = 1.0 // Update the background opacity immediately
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        backgroundOpacity = 1.0 //
+                    }
                 }
                
             }
