@@ -167,11 +167,11 @@ struct LevelsView: View {
             }
         }){
             Text(name)
-                .frame( width: 250,height: 70)
+                .frame( width: 200,height: 60)
                 .font(.system(size:40,weight:.bold))
                 .foregroundColor(Color.white)
-                .background(color)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .background(Color.Orange)
+                .clipShape(RoundedRectangle(cornerRadius: 50))
                 .offset(y: 0) // Apply the Y offset
                 .offset(x: (moveButtons) ? offset * (index % 2 == 0 ? 1 : -1) : 0)
                 }
@@ -210,15 +210,7 @@ struct LevelsView: View {
 
                     }
             
-            /*{
-                
-                CustomButton(data:isKat ? Info.katNEW1[index].joined() : Info.hirNEW1[index].joined(),
-                             isCircle: false,
-                             color: color,
-                             buttonOffsetY: 0,
-                             buttonOffsetX: (moveButtons) ? ((index % 2 == 0) ? buttonOffsetX * right : buttonOffsetX * left) : 0)
-                }
-             */
+           
             
             
                 .disabled((isKat && index > levelProgressKat) || (!isKat && index > levelProgressHir))

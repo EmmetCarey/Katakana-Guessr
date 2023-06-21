@@ -24,7 +24,6 @@
 		0D9F522A2A376075009BDEC1 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F52292A376075009BDEC1 /* Button.swift */; };
 		0D9F522C2A376E7B009BDEC1 /* LevelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F522B2A376E7B009BDEC1 /* LevelsView.swift */; };
 		0D9F522E2A37C1F5009BDEC1 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F522D2A37C1F5009BDEC1 /* QuestionView.swift */; };
-		0DFDF6AF2A4377E000BBB377 /* KatHirView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFDF6AE2A4377E000BBB377 /* KatHirView2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +65,6 @@
 		0D9F52292A376075009BDEC1 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		0D9F522B2A376E7B009BDEC1 /* LevelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelsView.swift; sourceTree = "<group>"; };
 		0D9F522D2A37C1F5009BDEC1 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
-		0DFDF6AE2A4377E000BBB377 /* KatHirView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KatHirView2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +118,6 @@
 				0D9F51F42A373F58009BDEC1 /* Learning2App.swift */,
 				0D9F51F62A373F58009BDEC1 /* GOView.swift */,
 				0D9F521F2A373FB9009BDEC1 /* KatHirView.swift */,
-				0DFDF6AE2A4377E000BBB377 /* KatHirView2.swift */,
 				0D9F522B2A376E7B009BDEC1 /* LevelsView.swift */,
 				0D9F522D2A37C1F5009BDEC1 /* QuestionView.swift */,
 				0D7C4D6E2A424BE0008FC640 /* LearnView.swift */,
@@ -294,7 +291,6 @@
 			files = (
 				0D9F522E2A37C1F5009BDEC1 /* QuestionView.swift in Sources */,
 				0D9F52202A373FB9009BDEC1 /* KatHirView.swift in Sources */,
-				0DFDF6AF2A4377E000BBB377 /* KatHirView2.swift in Sources */,
 				0D9F52222A374AAA009BDEC1 /* ColourExtension.swift in Sources */,
 				0D9F522A2A376075009BDEC1 /* Button.swift in Sources */,
 				0D9F52262A374D67009BDEC1 /* MovingText.swift in Sources */,
