@@ -23,7 +23,7 @@ struct LearnView: View {
         ZStack{
             
             Color.Beige.edgesIgnoringSafeArea(.all)
-      
+           
            
             
             ScrollView(showsIndicators: false){
@@ -35,23 +35,39 @@ struct LearnView: View {
                     getLabel2(label: "Monographs")
                 }
                 VStack {
-                   
-                    createRow(start: 0, end: 10, big: false)
+                    /*
+                    createRow(start: 0, end: 6, big: false)
                     Spacer().frame(height: 100)
                     getLabel2(label: "Diacritics")
                     createRow(start: 10, end: 14, big : false)
                     Spacer().frame(height: 100)
-                    
-                    
+                     ForEach(0..<3) { x in
+                         ForEach(0..<Info.katList[x].count) { y in
+                             Text(Info.katList[x][y])
+                         }
+                     }
+                     */
+                    createRow(start: 0, end: 6, big: false)
+                    Spacer().frame(height: 100)
+                    getLabel2(label: "Diacritics")
+                    createRow(start: 10, end: 14, big : false)
+                    Spacer().frame(height: 100)
                    
+                    
                 }
                 VStack{
+                    
                     getLabel2(label: "Diagraphs")
                     createRow(start: 14, end: 17, big : true)
                     Spacer().frame(height: 20)
                     createRow(start: 17, end: 20, big : true)
                     Spacer().frame(height: 20)
                     createRow(start: 20, end: 23, big : true)
+                     
+                    
+                }
+                .onAppear(){
+                    print(Info.katList[0][0])
                 }
                 .frame(maxWidth: .infinity)
                 .fullScreenCover(isPresented: $nextPage){
@@ -59,7 +75,7 @@ struct LearnView: View {
                 }
                 VStack{
                     Spacer().frame(height: 50)
-                    createRow(start: 23, end: 27, big : true)
+                   // createRow(start: 23, end: 27, big : true)
                 }
                 .frame(maxWidth: .infinity)
             }
@@ -102,8 +118,8 @@ struct LearnView: View {
             }
         }) {
             Text(isRom[x][y] ? labelRom : labelKat)
-                .frame(width: !big ? 60 : 60, height: 60)
-                .font(.system(size: !big ? 35: 29, weight: .bold))
+                .frame(width: !big ? 60 : 80, height: 60)
+                .font(.system(size: !big ? 35: 35, weight: .bold))
                 .foregroundColor(Color.white)
                 .background(Color.Easy)
                 .clipShape(RoundedRectangle(cornerRadius: 20))

@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct KatHirView: View {
+struct KatHirView2: View {
     
     @State private var nextPage = false
     @State private var isKat = false
@@ -215,9 +215,9 @@ struct KatHirView: View {
         */
     }
     
-    struct KatHirView_Previews: PreviewProvider {
+    struct KatHirView2_Previews: PreviewProvider {
         static var previews: some View {
-            KatHirView()
+            KatHirView2()
         }
     }
   

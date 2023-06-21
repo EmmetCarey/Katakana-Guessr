@@ -41,7 +41,7 @@ struct GOView: View {
                
             }
             .fullScreenCover(isPresented: $nextPage) {
-                KatHirView()
+                KatHirView2()
             }
         }
     }
