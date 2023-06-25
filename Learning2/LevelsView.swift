@@ -33,6 +33,8 @@ struct LevelsView: View {
     @State private var limit = 1
     @State private var backgroundOpacity = 0.2
     
+    @State private var isTest : Bool = false
+    
     @State private var moveButtons : Bool = false
     
     
@@ -102,7 +104,7 @@ struct LevelsView: View {
                 
                 .fullScreenCover(isPresented: $nextPage){
                     if isForward{
-                        QuestionView(limit: limit, currentLevel: levelSelected, isKat: isKat, questions: questions)
+                        QuestionView(isTest: isTest,limit: limit, currentLevel: levelSelected, isKat: isKat, questions: questions)
                     }
                     if isBack{
                         KatHirView()
@@ -154,7 +156,7 @@ struct LevelsView: View {
         
         Button(action: {
             withAnimation(.easeInOut) {
-                
+                isTest = true
                 levelSelected = index
                 questions = getTest(isKat: isKat, levels: levels)
                 isForward = true

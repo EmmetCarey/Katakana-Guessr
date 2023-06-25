@@ -8,16 +8,20 @@
 import SwiftUI
 
 struct QuestionView: View {
+    
     @State private var nextPage : Bool = false
     @State private var questionSymbol = ""
     @State private var answerRom = ""
     @State private var choiceArray: [String] = ["", "", "", ""]
     @State private var score = 0
     @State private var isBack = false
-    @State private var progress: CGFloat = 1.0 // Progress value between 0.0 and 1.0
+    @State private var progress: CGFloat = 1.0
     @State private var timer: Timer?
-    let barHeight: CGFloat = 50.0 // Change this value to set the height of the progress bar
-    let barWidth: CGFloat = 300.0 // Change this value to set the width of the progress bar
+    @State private var timerOn: Bool = true
+    @State var isTest: Bool
+    
+    let barHeight: CGFloat = 50.0
+    let barWidth: CGFloat = 300.0
     let limit : Int
     var currentLevel : Int
     var isKat: Bool
@@ -29,12 +33,22 @@ struct QuestionView: View {
         ZStack{
             Color.Beige.edgesIgnoringSafeArea(.all)
             VStack {
+              
                 
                 showQuestion()
-                
                 showOptions()
                 progressBar()
-                menuButton()
+                HStack{
+                    menuButton()
+                    Spacer().frame(width: 20)
+                    if !isTest{
+                        showTimer()
+                    }
+                   
+                }
+                
+               
+               
                 
             }.fullScreenCover(isPresented: $nextPage){
                 
@@ -58,11 +72,7 @@ struct QuestionView: View {
     }//var body: some View
     
     
-    private func calculateProgressBarWidth() -> CGFloat {
-           let maxWidth: CGFloat = 200 // Adjust this value as needed
-           let percentage = CGFloat(score) / CGFloat(limit)
-           return maxWidth * min(percentage, 1.0)
-       }
+    
     
     func showOptions() -> some View{
         
@@ -80,6 +90,12 @@ struct QuestionView: View {
             }
         }
     }
+    
+     func calculateProgressBarWidth() -> CGFloat {
+           let maxWidth: CGFloat = 200 // Adjust this value as needed
+           let percentage = CGFloat(score) / CGFloat(limit)
+           return maxWidth * min(percentage, 1.0)
+       }
     
     func progressBar() -> some View{
         
@@ -102,10 +118,23 @@ struct QuestionView: View {
         }
     }
     
-    
-    
-    
-    
+    func showTimer() -> some View{
+        Button(action: {
+            timerOn.toggle()
+           }) {
+               Image(systemName: "clock.fill")
+                   .resizable()
+                   .foregroundColor(.white)
+                   .frame(width: 30, height: 30)
+                   .padding(10)
+                   .background(Color.Easy)
+                   .clipShape(Circle())
+                   .opacity(timerOn ? 1 : 0.5)
+                   .offset(y:40)
+                   
+           }
+           .padding(10)
+    }
     func showQuestion() -> some View{
         
         /*
@@ -137,9 +166,6 @@ struct QuestionView: View {
             )
                 )
     }
-    
-    
-    
     
     func menuButton() -> some View{
         
@@ -199,18 +225,20 @@ struct QuestionView: View {
     }
     
     func startTimer() {
-        timer?.invalidate() // Stop the timer if it's already running
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 0.03, repeats: true) { timer in
-            if progress > 0.0 {
-                progress -= 0.1 / 10.0 // Adjust the decrement value to control the speed of progress
-            } else {
-                progress = 1.0 // Reset progress to 1.0 when it reaches 0.0
-                generateRandoms()
-                if score > 0{
-                    score-=1
+        if timerOn{
+            timer?.invalidate() // Stop the timer if it's already running
+            
+            timer = Timer.scheduledTimer(withTimeInterval: 0.03, repeats: true) { timer in
+                if progress > 0.0{
+                    progress -= 0.1 / 10.0 // Adjust the decrement value to control the speed of progress
+                } else {
+                    progress = 1.0 // Reset progress to 1.0 when it reaches 0.0
+                    generateRandoms()
+                    if score > 0{
+                        score-=1
+                    }
+                    
                 }
-                
             }
         }
     }
@@ -253,6 +281,6 @@ struct QuestionView: View {
 
 struct QuestionView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView(limit: 3, currentLevel: 3, isKat: true, questions: [Info.katNEW1[1],Info.romNEW1[1]])
+        QuestionView(isTest: true, limit: 3, currentLevel: 3, isKat: true, questions: [Info.katNEW1[1],Info.romNEW1[1]])
     }
 }
