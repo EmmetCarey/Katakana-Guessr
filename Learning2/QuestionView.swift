@@ -14,7 +14,10 @@ struct QuestionView: View {
     @State private var choiceArray: [String] = ["", "", "", ""]
     @State private var score = 0
     @State private var isBack = false
-    
+    @State private var progress: CGFloat = 1.0 // Progress value between 0.0 and 1.0
+    @State private var timer: Timer?
+    let barHeight: CGFloat = 50.0 // Change this value to set the height of the progress bar
+    let barWidth: CGFloat = 300.0 // Change this value to set the width of the progress bar
     let limit : Int
     var currentLevel : Int
     var isKat: Bool
@@ -28,6 +31,7 @@ struct QuestionView: View {
             VStack {
                 
                 showQuestion()
+                
                 showOptions()
                 progressBar()
                 menuButton()
@@ -42,15 +46,12 @@ struct QuestionView: View {
                     }
                 }
                 if isBack{
-                    GOView()
+                    KatHirView()
                 }
             }
         }//ZStack
         .onAppear{
-            print(currentLevel,"DFGHJHGFDFGH")
-            print(questions)
-            print(questionSymbol,"HIII")
-            print(answerRom,"<==")
+            startTimer()
             generateRandoms()
             print(UserDefaults.standard.integer(forKey: "levelProgressKat"))
         }
@@ -101,8 +102,13 @@ struct QuestionView: View {
         }
     }
     
+    
+    
+    
+    
     func showQuestion() -> some View{
         
+        /*
         Text("\(questionSymbol)")
             .font(.system(size: 80, weight: .bold))
             .offset(y: 0)
@@ -110,7 +116,30 @@ struct QuestionView: View {
             .frame(width: currentLevel > 14 ? 170 : 130, height: 130)
             .background(Color.Medium)
             .clipShape(RoundedRectangle(cornerRadius: 20))
+        
+        
+        
+        */
+        
+        RoundedRectangle(cornerRadius: 10)
+            .fill(.red)
+            .frame(width: currentLevel > 14 ? 170 : 130, height: 130)
+            .opacity(0.5)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.red)
+                    .frame(width: currentLevel > 14 ? 170 : 130, height: progress*130)
+                    .offset(y: 65 * (1-progress))
+                    .overlay(
+                    Text(questionSymbol)
+                        .font(.system(size: 80,weight:.bold))
+                        .foregroundColor(Color.white)
+            )
+                )
     }
+    
+    
+    
     
     func menuButton() -> some View{
         
@@ -169,12 +198,35 @@ struct QuestionView: View {
         
     }
     
+    func startTimer() {
+        timer?.invalidate() // Stop the timer if it's already running
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.03, repeats: true) { timer in
+            if progress > 0.0 {
+                progress -= 0.1 / 10.0 // Adjust the decrement value to control the speed of progress
+            } else {
+                progress = 1.0 // Reset progress to 1.0 when it reaches 0.0
+                generateRandoms()
+                if score > 0{
+                    score-=1
+                }
+                
+            }
+        }
+    }
+    
+    func resetProgress() {
+        timer?.invalidate() // Stop the timer
+        progress = 1.0 // Reset progress to 1.0
+        startTimer() // Start the timer again
+    }
+    
     func goNextPage(){
             nextPage = true
     }
     
     func generateRandoms(){
-        
+        resetProgress()
         let randomIndices = questions[0].indices.shuffled().prefix(4)
         
         let resultArray = randomIndices.map { index in

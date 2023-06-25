@@ -19,7 +19,6 @@ struct KatHirView: View {
     @State private var fontSize: CGFloat = 30
     @State private var color: Color = Color.Easy
     
-    @State private var offset1: CGFloat = 400
     @State private var offset: CGFloat = 0
     
     @State private var left: CGFloat = -1
@@ -46,27 +45,18 @@ struct KatHirView: View {
             BackgroundView()
                 .opacity(backgroundOpacity)
             VStack {
-                Spacer().frame(height: 100)
-                /*
-                getKatakana(label: "Katakana",direction: right,isKat:true)
-                getHiragana(label: "Hiragana",direction: left,isKat:false)
-                 */
+               
                 getButton(label: "Katakana", direction: right, isKat: true)
                 getButton(label: "Hiragana", direction: left, isKat: false)
                 getButton2(label: "Learn", test: false, kat: true,direction: left)
                 getButton2(label: "Test", test: true, kat: true,direction: right)
-                
-                /*
-                getButton2(label: "Learn", test: false, kat: false,direction: right)
-                getButton2(label: "Test", test: true, kat: false,direction: left)
-                */
             
             }
                 
                 
                 
         }.onAppear(){
-            changeOpacity(change: 0.7)
+            changeOpacity(change: 0.5)
         }
             .fullScreenCover(isPresented: $nextPage){
                 if isTest{
@@ -74,19 +64,21 @@ struct KatHirView: View {
                     if !isKat{LevelsView(isKat:.constant(false))}
                 }
                 if !isTest && !isBack{LearnView(isKat: $isKat)
-                }else if isBack{GOView()}
+                }else if isBack{KatHirView()}
                 
             }
         
     }
+    
     func changeOpacity(change : CGFloat){
         withAnimation(.easeInOut(duration: 0.3)) {
             backgroundOpacity = change //
+        }
     }
-    }
+    
     func getButton(label: String, direction: CGFloat, isKat: Bool) -> some View {
         Button(action: {
-            changeOpacity(change: 0.5)
+            changeOpacity(change: 0.2)
             withAnimation(.easeInOut) {
                 if isKat {
                     katPressed = true
@@ -111,9 +103,9 @@ struct KatHirView: View {
 
     func getOffset(isKat: Bool) -> CGFloat {
         if isKat {
-            return hirPressed ? -1000 : (katPressed ? 50 : 0)
+            return hirPressed ? -1000 : (katPressed ? 70 : 0)
         } else {
-            return katPressed ? 1000 : (hirPressed ? -20 : 0)
+            return katPressed ? 1000 : (hirPressed ? -10 : 0)
         }
     }
 
@@ -121,49 +113,7 @@ struct KatHirView: View {
     func moveButtons(){
         buttonOffsetX = 400
     }
-    
-    func getKatakana(label: String, direction: CGFloat, isKat: Bool) -> some View{
-        
-        Button(action:{
-            withAnimation(.easeInOut){
-                katPressed = true
-                isMoveButtons = true
-            }
-        }){
-            Text(label)
-                .frame(width:  260 , height: 70 )
-                .font(.system(size: 40 , weight: .bold))
-                .foregroundColor(Color.white)
-                .background(Color.Medium)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                // 1:  2:is move and kat pressed = -20   3: 4:
-                .offset(y: isMoveButtons ? (hirPressed ? -1000 : (katPressed ? 30 : 0)) : 0)
-                .offset(x: finalMove*direction)
-            
-        }.disabled(isMoveButtons)
-        
-    }
 
-    func getHiragana(label: String, direction: CGFloat, isKat: Bool) -> some View{
-        
-        Button(action:{
-        
-            withAnimation(.easeInOut){
-                hirPressed = true
-                isMoveButtons = true
-            }
-        }){
-            Text(label)
-                .frame(width:  260 , height: 70 )
-                .font(.system(size: 40 , weight: .bold))
-                .foregroundColor(Color.white)
-                .background(Color.Medium)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .offset(y: isMoveButtons ? (katPressed ? 1000 : (hirPressed ? -40 : 0)) : 0)
-                .offset(x: finalMove)
-        }.disabled(isMoveButtons)
-        
-    }
     
     func getButton2(label: String, test: Bool, kat: Bool, direction: CGFloat) -> some View{
         
@@ -177,6 +127,7 @@ struct KatHirView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     nextPage=true
                 }
+             
             }
         }){
             Text(label)
@@ -185,9 +136,11 @@ struct KatHirView: View {
                 .foregroundColor(Color.white)
                 .background(color)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
+               
                 .offset(x:(isMoveButtons) ? buttonOffsetX*direction : 400*direction)
      
         }
+        
     }
     }
     
