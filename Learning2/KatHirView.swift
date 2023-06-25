@@ -33,6 +33,8 @@ struct KatHirView: View {
     @State private var hirOffsetOnHir: CGFloat = -1
     @State private var hirOffsetOnKat: CGFloat = -1
     
+    @State private var backgroundOpacity = 0.0
+    
     
     
     
@@ -41,8 +43,8 @@ struct KatHirView: View {
         ZStack{
             
             Color.Beige.edgesIgnoringSafeArea(.all)
-            
-            
+            BackgroundView()
+                .opacity(backgroundOpacity)
             VStack {
                 Spacer().frame(height: 100)
                 /*
@@ -63,27 +65,28 @@ struct KatHirView: View {
                 
                 
                 
-            }
+        }.onAppear(){
+            changeOpacity(change: 0.7)
+        }
             .fullScreenCover(isPresented: $nextPage){
                 if isTest{
-                    if isKat{
-                        LevelsView(isKat:.constant(true))
-                    }
-                    if !isKat{
-                        LevelsView(isKat:.constant(false))
-                    }
+                    if isKat{LevelsView(isKat:.constant(true))}
+                    if !isKat{LevelsView(isKat:.constant(false))}
                 }
-                if !isTest && !isBack{
-                    LearnView(isKat: $isKat)
-                }else if isBack{
-                    GOView()
-                }
+                if !isTest && !isBack{LearnView(isKat: $isKat)
+                }else if isBack{GOView()}
                 
             }
         
     }
+    func changeOpacity(change : CGFloat){
+        withAnimation(.easeInOut(duration: 0.3)) {
+            backgroundOpacity = change //
+    }
+    }
     func getButton(label: String, direction: CGFloat, isKat: Bool) -> some View {
         Button(action: {
+            changeOpacity(change: 0.5)
             withAnimation(.easeInOut) {
                 if isKat {
                     katPressed = true
@@ -165,6 +168,7 @@ struct KatHirView: View {
     func getButton2(label: String, test: Bool, kat: Bool, direction: CGFloat) -> some View{
         
         Button(action:{
+            changeOpacity(change: 0)
             withAnimation(.easeInOut(duration: 0.5)){
                 moveButtons()
                 isKat = kat

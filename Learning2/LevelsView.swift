@@ -197,7 +197,8 @@ struct LevelsView: View {
                     
                 }
             }){
-                Text(isKat ? Info.katNEW1[index].joined() : Info.hirNEW1[index].joined())
+                Text(isKat ? Info.katNEW1[index].joined() :
+                        Info.hirNEW1[index].joined())
                     .frame( width: 250,height: 70)
                     .font(.system(size:40,weight:.bold))
                     .foregroundColor(Color.white)

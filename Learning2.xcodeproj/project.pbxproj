@@ -24,6 +24,8 @@
 		0D9F522A2A376075009BDEC1 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F52292A376075009BDEC1 /* Button.swift */; };
 		0D9F522C2A376E7B009BDEC1 /* LevelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F522B2A376E7B009BDEC1 /* LevelsView.swift */; };
 		0D9F522E2A37C1F5009BDEC1 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F522D2A37C1F5009BDEC1 /* QuestionView.swift */; };
+		0DFDF6B12A438D4A00BBB377 /* Audio in Resources */ = {isa = PBXBuildFile; fileRef = 0DFDF6B02A438D4A00BBB377 /* Audio */; };
+		0DFDF6B32A438D5E00BBB377 /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFDF6B22A438D5E00BBB377 /* Music.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,8 @@
 		0D9F52292A376075009BDEC1 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		0D9F522B2A376E7B009BDEC1 /* LevelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelsView.swift; sourceTree = "<group>"; };
 		0D9F522D2A37C1F5009BDEC1 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
+		0DFDF6B02A438D4A00BBB377 /* Audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Audio; sourceTree = "<group>"; };
+		0DFDF6B22A438D5E00BBB377 /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,12 +121,14 @@
 			children = (
 				0D9F51F42A373F58009BDEC1 /* Learning2App.swift */,
 				0D9F51F62A373F58009BDEC1 /* GOView.swift */,
+				0DFDF6B22A438D5E00BBB377 /* Music.swift */,
 				0D9F521F2A373FB9009BDEC1 /* KatHirView.swift */,
 				0D9F522B2A376E7B009BDEC1 /* LevelsView.swift */,
 				0D9F522D2A37C1F5009BDEC1 /* QuestionView.swift */,
 				0D7C4D6E2A424BE0008FC640 /* LearnView.swift */,
 				0D9F51F82A373F5B009BDEC1 /* Assets.xcassets */,
 				0D9F51FA2A373F5B009BDEC1 /* Learning2.entitlements */,
+				0DFDF6B02A438D4A00BBB377 /* Audio */,
 				0D9F51FB2A373F5B009BDEC1 /* Preview Content */,
 			);
 			path = Learning2;
@@ -263,6 +269,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DFDF6B12A438D4A00BBB377 /* Audio in Resources */,
 				0D9F51FD2A373F5B009BDEC1 /* Preview Assets.xcassets in Resources */,
 				0D9F51F92A373F5B009BDEC1 /* Assets.xcassets in Resources */,
 			);
@@ -290,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D9F522E2A37C1F5009BDEC1 /* QuestionView.swift in Sources */,
+				0DFDF6B32A438D5E00BBB377 /* Music.swift in Sources */,
 				0D9F52202A373FB9009BDEC1 /* KatHirView.swift in Sources */,
 				0D9F52222A374AAA009BDEC1 /* ColourExtension.swift in Sources */,
 				0D9F522A2A376075009BDEC1 /* Button.swift in Sources */,
