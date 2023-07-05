@@ -35,22 +35,20 @@ struct KatHirView: View {
     @State private var backgroundOpacity = 0.0
     
     
-    
-    
-    
     var body: some View {
         ZStack{
             
             Color.Beige.edgesIgnoringSafeArea(.all)
-            BackgroundView()
-                .opacity(backgroundOpacity)
+            BackgroundView().opacity(0.6)
+            
             VStack {
                
-                getButton(label: "Katakana", direction: right, isKat: true)
-                getButton(label: "Hiragana", direction: left, isKat: false)
-                getButton2(label: "Learn", test: false, kat: true,direction: left)
-                getButton2(label: "Test", test: true, kat: true,direction: right)
-            
+                getButton(label: "Katakana", direction: right, passKat: true)
+                getButton(label: "Hiragana", direction: left, passKat: false)
+                
+                getButton2(label: "Test", test: true, direction: left)
+                getButton2(label: "Learn", test: false, direction: right)
+
             }
                 
                 
@@ -63,7 +61,10 @@ struct KatHirView: View {
                     if isKat{LevelsView(isKat:.constant(true))}
                     if !isKat{LevelsView(isKat:.constant(false))}
                 }
-                if !isTest && !isBack{LearnView(isKat: $isKat)
+                
+                if !isTest && !isBack{
+                   
+                    LearnView(isKat: $isKat)
                 }else if isBack{KatHirView()}
                 
             }
@@ -76,11 +77,14 @@ struct KatHirView: View {
         }
     }
     
-    func getButton(label: String, direction: CGFloat, isKat: Bool) -> some View {
+    func getButton(label: String, direction: CGFloat, passKat: Bool) -> some View {
+       
         Button(action: {
+            isKat = passKat
             changeOpacity(change: 0.2)
             withAnimation(.easeInOut) {
-                if isKat {
+                if passKat {
+                    
                     katPressed = true
                     isMoveButtons = true
                 } else {
@@ -88,6 +92,7 @@ struct KatHirView: View {
                     isMoveButtons = true
                 }
             }
+        
         }) {
             Text(label)
                 .frame(width: 260, height: 70)
@@ -96,7 +101,7 @@ struct KatHirView: View {
                 .background(Color.Medium)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .offset(x: finalMove)
-                .offset(y: isMoveButtons ? getOffset(isKat: isKat) : 0)
+                .offset(y: isMoveButtons ? getOffset(isKat: passKat) : 0)
         }
         .disabled(isMoveButtons)
     }
@@ -115,13 +120,12 @@ struct KatHirView: View {
     }
 
     
-    func getButton2(label: String, test: Bool, kat: Bool, direction: CGFloat) -> some View{
+    func getButton2(label: String, test: Bool, direction: CGFloat) -> some View{
         
         Button(action:{
             changeOpacity(change: 0)
             withAnimation(.easeInOut(duration: 0.5)){
                 moveButtons()
-                isKat = kat
                 isTest = test
                 finalMove = 400
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {

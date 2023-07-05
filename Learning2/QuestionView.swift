@@ -19,7 +19,7 @@ struct QuestionView: View {
     @State private var timer: Timer?
     @State private var timerOn: Bool = true
     @State var isTest: Bool
-    
+    @State var backgroundOpacity: CGFloat = 1
     let barHeight: CGFloat = 50.0
     let barWidth: CGFloat = 300.0
     let limit : Int
@@ -38,19 +38,19 @@ struct QuestionView: View {
                 showQuestion()
                 showOptions()
                 progressBar()
+                
                 HStack{
                     menuButton()
-                    Spacer().frame(width: 20)
+                    Spacer().frame(width: 70)
                     if !isTest{
                         showTimer()
                     }
                    
                 }
-                
-               
-               
-                
-            }.fullScreenCover(isPresented: $nextPage){
+      
+            }
+            .opacity(backgroundOpacity)
+            .fullScreenCover(isPresented: $nextPage){
                 
                 if !isBack{
                     if isKat{
@@ -120,7 +120,13 @@ struct QuestionView: View {
     
     func showTimer() -> some View{
         Button(action: {
-            timerOn.toggle()
+            if timerOn{
+                timerOn=false
+                progress = 0
+            }else{
+                timerOn = true
+                generateRandoms()
+            }
            }) {
                Image(systemName: "clock.fill")
                    .resizable()
@@ -167,7 +173,7 @@ struct QuestionView: View {
                 )
     }
     
-    func menuButton() -> some View{
+    func menuButton1() -> some View{
         
         //>>> MENU >>>
         Button(action: {
@@ -189,6 +195,29 @@ struct QuestionView: View {
         //<<< MENU <<<
     }
     
+    
+    func menuButton() -> some View{
+        
+        Button(action: {
+            withAnimation(.easeInOut){
+                isBack = true
+                nextPage=true
+            }
+        })  {
+            ZStack {
+                Circle()
+                    .fill(Color.Easy)
+                    .frame(width: 50, height: 50)
+                Image(systemName: "chevron.left")
+                    .font(.system(size:30,weight:.bold))
+                    .foregroundColor(.white)
+          
+            }
+            .offset(y:40)
+        }
+    }
+
+
     func checkAnswer(answer: String){
         
         if answer == answerRom{
@@ -281,6 +310,6 @@ struct QuestionView: View {
 
 struct QuestionView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView(isTest: true, limit: 3, currentLevel: 3, isKat: true, questions: [Info.katNEW1[1],Info.romNEW1[1]])
+        QuestionView(isTest: false, limit: 3, currentLevel: 3, isKat: true, questions: [Info.katNEW1[1],Info.romNEW1[1]])
     }
 }

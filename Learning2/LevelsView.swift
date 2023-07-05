@@ -65,43 +65,47 @@ struct LevelsView: View {
                     Spacer().frame(height: 50)
 
                     levelButtons(start: 0, end: 3, color: Color.Medium)
-                    
-                    testButton(index: 3, level: 3, name: "Test 1", color: Color.BlueEasy, levels: [0,1,2])
+                    testButton(index: 3, level: 3, name: "Test 1", color: Color.Medium, levels: [0,1,2])
+                    Spacer().frame(height: 50)
                     
                     levelButtons(start: 4, end: 7, color: Color.Medium)
-                    
-                    testButton(index: 7, level: 7, name: "Test 2", color: Color.BlueEasy, levels: [4,5,6])
+                    testButton(index: 7, level: 7, name: "Test 2", color: Color.Medium, levels: [4,5,6])
+                    Spacer().frame(height: 50)
                     
                     levelButtons(start: 8, end: 11, color: Color.Medium)
+                    testButton(index: 11, level: 11, name: "Test 3", color: Color.Medium, levels: [8,9,10])
+                    Spacer().frame(height: 50)
                     
-                    testButton(index: 11, level: 11, name: "Test 3", color: Color.BlueEasy, levels: [8,9,10])
-            
-                    levelButtons(start: 12, end: 17, color: Color.Medium)
+                    
                     
                 }.frame(maxWidth: .infinity)
                 VStack {
                     
-                    testButton(index: 17, level: 17, name: "Test 4", color: Color.BlueEasy, levels: [12,13,14,15,16])
-                    
+                    levelButtons(start: 12, end: 17, color: Color.Medium)
+                    testButton(index: 17, level: 17, name: "Test 4", color: Color.Medium, levels: [12,13,14,15,16])
+                    Spacer().frame(height: 50)
+                
                     levelButtons(start: 18, end: 21, color: Color.Medium)
-                    
-                    testButton(index: 21, level: 21, name: "Test 5", color: Color.BlueEasy, levels: [18,19,20])
-                    
+                    testButton(index: 21, level: 21, name: "Test 5", color: Color.Medium, levels: [18,19,20])
+                    Spacer().frame(height: 50)
+                   
+                     
+        
+                }.frame(maxWidth: .infinity)
+                VStack {
                     levelButtons(start: 22, end: 25, color: Color.Medium)
-                    
-                    testButton(index: 25, level: 25, name: "Test 6", color: Color.BlueEasy, levels: [22,23,24])
+                    testButton(index: 25, level: 25, name: "Test 6", color: Color.Medium, levels: [22,23,24])
+                    Spacer().frame(height: 50)
                     
                     levelButtons(start: 26, end: 29, color: Color.Medium)
-                    
-                    testButton(index: 29, level: 29, name: "Test 6", color: Color.BlueEasy, levels: [27,28,29])
+                    testButton(index: 29, level: 29, name: "Test 6", color: Color.Medium, levels: [27,28,29])
+                    Spacer().frame(height: 50)
                     
                     levelButtons(start: 30, end: 33, color: Color.Medium)
+                    testButton(index: 33, level: 33, name: "Test 6", color: Color.Medium, levels: [31,32,33])
                     
-                    testButton(index: 33, level: 33, name: "Test 6", color: Color.BlueEasy, levels: [31,32,33])
-                     
-                    Spacer().frame(height: 200)
+                    
                 }.frame(maxWidth: .infinity)
-                
                 .fullScreenCover(isPresented: $nextPage){
                     if isForward{
                         QuestionView(isTest: isTest,limit: limit, currentLevel: levelSelected, isKat: isKat, questions: questions)
@@ -124,7 +128,7 @@ struct LevelsView: View {
         
         Button(action: {
             withAnimation(.easeInOut) {
-                
+                isTest = true
                 levelSelected = index
                 questions = getTest(isKat: isKat, levels: [0,1,2,4,5,6,8,9,10,12,13,14,15,16,18,19,20,22,23,24,26,27,28,30,31,32])
                 moveButtons = true
@@ -169,11 +173,11 @@ struct LevelsView: View {
             }
         }){
             Text(name)
-                .frame( width: 200,height: 60)
+                .frame( width: 250,height: 70)
                 .font(.system(size:40,weight:.bold))
                 .foregroundColor(Color.white)
-                .background(Color.Orange)
-                .clipShape(RoundedRectangle(cornerRadius: 50))
+                .background(color)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
                 .offset(y: 0) // Apply the Y offset
                 .offset(x: (moveButtons) ? offset * (index % 2 == 0 ? 1 : -1) : 0)
                 }
