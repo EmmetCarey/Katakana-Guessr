@@ -37,9 +37,15 @@ struct QuestionView: View {
                 
                 showQuestion()
                 showOptions()
-                progressBar()
+                if limit < 999{
+                    progressBar()
+                }
+               
                 
                 HStack{
+                    if isTest{
+                        Spacer().frame(width: 60)
+                    }
                     menuButton()
                     Spacer().frame(width: 70)
                     if !isTest{
@@ -214,6 +220,7 @@ struct QuestionView: View {
           
             }
             .offset(y:40)
+            
         }
     }
 
@@ -257,7 +264,7 @@ struct QuestionView: View {
         if timerOn{
             timer?.invalidate() // Stop the timer if it's already running
             
-            timer = Timer.scheduledTimer(withTimeInterval: 0.03, repeats: true) { timer in
+            timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { timer in
                 if progress > 0.0{
                     progress -= 0.1 / 10.0 // Adjust the decrement value to control the speed of progress
                 } else {
@@ -310,6 +317,6 @@ struct QuestionView: View {
 
 struct QuestionView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView(isTest: false, limit: 3, currentLevel: 3, isKat: true, questions: [Info.katNEW1[1],Info.romNEW1[1]])
+        QuestionView(isTest: true, limit: 3, currentLevel: 3, isKat: true, questions: [Info.katNEW1[1],Info.romNEW1[1]])
     }
 }

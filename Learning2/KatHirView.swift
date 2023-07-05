@@ -4,6 +4,7 @@ struct KatHirView: View {
     
     @State private var nextPage = false
     @State private var isKat = false
+    @State private var infiniteTest = false
     
     @State private var isBack = false
     @State private var isTest = false
@@ -48,6 +49,8 @@ struct KatHirView: View {
                 
                 getButton2(label: "Test", test: true, direction: left)
                 getButton2(label: "Learn", test: false, direction: right)
+                getButton3(label: "∞", test: true, direction: left)
+                
 
             }
                 
@@ -57,15 +60,26 @@ struct KatHirView: View {
             changeOpacity(change: 0.5)
         }
             .fullScreenCover(isPresented: $nextPage){
-                if isTest{
-                    if isKat{LevelsView(isKat:.constant(true))}
-                    if !isKat{LevelsView(isKat:.constant(false))}
+                
+                if infiniteTest{
+                    QuestionView(isTest: true, limit: 1000, currentLevel: 33, isKat: isKat, questions: getTest(isKat: isKat, levels: (0...UserDefaults.standard.integer(forKey: "levelProgressKat")).map { $0 }))
+                }
+                else if isTest{
+                    if isKat{
+                        LevelsView(isKat:.constant(true))
+                    }
+                    if !isKat{
+                        LevelsView(isKat:.constant(false))
+                    }
                 }
                 
                 if !isTest && !isBack{
                    
                     LearnView(isKat: $isKat)
-                }else if isBack{KatHirView()}
+                }
+                else if isBack{
+                    KatHirView()
+                }
                 
             }
         
@@ -114,12 +128,10 @@ struct KatHirView: View {
         }
     }
 
-
     func moveButtons(){
         buttonOffsetX = 400
     }
 
-    
     func getButton2(label: String, test: Bool, direction: CGFloat) -> some View{
         
         Button(action:{
@@ -146,6 +158,35 @@ struct KatHirView: View {
         }
         
     }
+    
+    func getButton3(label: String, test: Bool, direction: CGFloat) -> some View{
+        
+        Button(action:{
+            changeOpacity(change: 0)
+            withAnimation(.easeInOut(duration: 0.5)){
+                moveButtons()
+                infiniteTest = true
+                isTest = test
+                finalMove = 400
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    nextPage=true
+                }
+             
+            }
+        }){
+            Text(label)
+                .frame(width:  width , height: height )
+                .font(.system(size: fontSize , weight: .bold))
+                .foregroundColor(Color.white)
+                .background(color)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+               
+                .offset(x:(isMoveButtons) ? buttonOffsetX*direction : 400*direction)
+     
+        }
+        
+    }
+    
     }
     
     struct KatHirView_Previews: PreviewProvider {
