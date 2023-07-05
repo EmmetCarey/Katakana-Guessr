@@ -49,15 +49,7 @@ struct LevelsView: View {
                 VStack {
                     
                     Spacer().frame(height: 50)
-                    
-                    if levelProgressKat>33{
-                        Spacer().frame(height: 50)
-                        menuButton()
-                        Spacer().frame(height: 50)
-                        infiniteButton(index: 33)
-                    }else{
-                        menuButton()
-                    }
+                    menuButton()
                     
                 }.frame(maxWidth: .infinity)
                 VStack {

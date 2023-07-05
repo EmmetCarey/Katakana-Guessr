@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct QuestionView: View {
     
+    @State var audioPlayer: AVAudioPlayer?
     @State private var nextPage : Bool = false
     @State private var questionSymbol = ""
     @State private var answerRom = ""
@@ -88,6 +90,7 @@ struct QuestionView: View {
                     let index = row * 2 + column
                     
                     Button(action: {
+                        playAudio(file: choiceArray[index])
                         checkAnswer(answer: choiceArray[index])
                     }) {
                         CustomButton(data: choiceArray[index], isCircle: true, color: Color.Medium, buttonOffsetY: 0, buttonOffsetX: 0)
@@ -178,7 +181,18 @@ struct QuestionView: View {
             )
                 )
     }
-    
+    func playAudio(file : String) {
+            guard let audioFileURL = Bundle.main.url(forResource: file, withExtension: "mp3") else {
+                return
+            }
+            
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: audioFileURL)
+                audioPlayer?.play()
+            } catch {
+                print("Error playing audio: \(error.localizedDescription)")
+            }
+        }
     func menuButton1() -> some View{
         
         //>>> MENU >>>
@@ -268,6 +282,7 @@ struct QuestionView: View {
                 if progress > 0.0{
                     progress -= 0.1 / 10.0 // Adjust the decrement value to control the speed of progress
                 } else {
+                   
                     progress = 1.0 // Reset progress to 1.0 when it reaches 0.0
                     generateRandoms()
                     if score > 0{

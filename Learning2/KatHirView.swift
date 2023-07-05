@@ -1,11 +1,12 @@
 import SwiftUI
+import AVFoundation
 
 struct KatHirView: View {
     
     @State private var nextPage = false
     @State private var isKat = false
     @State private var infiniteTest = false
-    
+    @State var audioPlayer: AVAudioPlayer?
     @State private var isBack = false
     @State private var isTest = false
     
@@ -94,6 +95,7 @@ struct KatHirView: View {
     func getButton(label: String, direction: CGFloat, passKat: Bool) -> some View {
        
         Button(action: {
+            playAudio(file: "click")
             isKat = passKat
             changeOpacity(change: 0.2)
             withAnimation(.easeInOut) {
@@ -135,6 +137,7 @@ struct KatHirView: View {
     func getButton2(label: String, test: Bool, direction: CGFloat) -> some View{
         
         Button(action:{
+            playAudio(file: "click")
             changeOpacity(change: 0)
             withAnimation(.easeInOut(duration: 0.5)){
                 moveButtons()
@@ -158,6 +161,19 @@ struct KatHirView: View {
         }
         
     }
+    
+    func playAudio(file : String) {
+            guard let audioFileURL = Bundle.main.url(forResource: file, withExtension: "mp3") else {
+                return
+            }
+            
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: audioFileURL)
+                audioPlayer?.play()
+            } catch {
+                print("Error playing audio: \(error.localizedDescription)")
+            }
+        }
     
     func getButton3(label: String, test: Bool, direction: CGFloat) -> some View{
         
