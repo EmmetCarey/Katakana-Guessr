@@ -43,16 +43,16 @@ struct KatHirView: View {
                     getButton2(label: "Levels", test: true, direction: left)
                     getButton2(label: "Table", test: false, direction: right)
                     getButton3(label: "Test All", test: true, direction: left)
-                }
-                
-                
-            
-                
-                
+                }    
             }.onAppear(){
-                withAnimation(.easeInOut(duration: 2.0)){
-                    changeOpacity(change: 0.5)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
+                    withAnimation(.easeInOut(duration: 1)) {
+                        backgroundOpacity = 0.8 //
+                    }
                 }
+                
+               
                 
             }
                 .fullScreenCover(isPresented: $nextPage){
@@ -102,7 +102,7 @@ struct KatHirView: View {
     func HiraganaButton() -> some View{
         Button(action: {
             playAudio(file: correct)
-           
+            isKat = false
             withAnimation(.easeInOut){
                 katPressed = false
                 hirPressed = true
@@ -140,7 +140,7 @@ struct KatHirView: View {
             withAnimation(.easeInOut(duration: 0.5)){
                 moveButtons()
                 isTest = test
-                finalMove = 400
+                finalMove = 600
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     nextPage=true
                 }
@@ -193,6 +193,7 @@ struct KatHirView: View {
     }
     
     func changeOpacity(change : CGFloat){
+        
         withAnimation(.easeInOut(duration: 0.3)) {
             backgroundOpacity = change //
         }
@@ -212,7 +213,7 @@ struct KatHirView: View {
     
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct KatHirView_Previews: PreviewProvider {
     static var previews: some View {
         KatHirView()
     }

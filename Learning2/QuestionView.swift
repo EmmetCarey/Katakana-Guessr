@@ -28,7 +28,7 @@ struct QuestionView: View {
     var currentLevel : Int
     var isKat: Bool
     var questions: [[String]]
-    
+    @State var opacity: CGFloat = 1
     
     var body: some View {
         
@@ -63,6 +63,7 @@ struct QuestionView: View {
                 if !isBack{
                     if isKat{
                         LevelsView(isKat: .constant(true))
+                        
                     }else{
                         LevelsView(isKat: .constant(false))
                     }
@@ -93,7 +94,8 @@ struct QuestionView: View {
                        
                         checkAnswer(answer: choiceArray[index])
                     }) {
-                        CustomButton(data: choiceArray[index], isCircle: true, color: Color.Medium, buttonOffsetY: 0, buttonOffsetX: 0)
+                        CustomButton(data: choiceArray[index], isCircle: true, color: Color.Medium, buttonOffsetY: 0, buttonOffsetX: 0).opacity(opacity)
+                        
                     }
                 }
             }
@@ -116,7 +118,7 @@ struct QuestionView: View {
                 .alignmentGuide(.leading) { d in d[.leading] }
                 .alignmentGuide(.trailing) { _ in calculateProgressBarWidth() }
                 .offset(y: 30)
-            
+                
             
             RoundedRectangle(cornerRadius: 10)
                 .frame(width: calculateProgressBarWidth(), height: 20)
@@ -124,7 +126,7 @@ struct QuestionView: View {
                 .animation(.easeInOut)
             
            
-        }
+        }.opacity(opacity)
     }
     
     func showTimer() -> some View{
@@ -146,26 +148,15 @@ struct QuestionView: View {
                    .padding(10)
                    .background(Color.Easy)
                    .clipShape(Circle())
-                   .opacity(timerOn ? 1 : 0.5)
+                   .opacity(nextPage ? opacity : (timerOn ? 1 : 0.5))
                    .offset(y:40)
+                   .opacity(opacity)
                    
            }
            .padding(10)
     }
     func showQuestion() -> some View{
-        
-        /*
-        Text("\(questionSymbol)")
-            .font(.system(size: 80, weight: .bold))
-            .offset(y: 0)
-            .foregroundColor(.white)
-            .frame(width: currentLevel > 14 ? 170 : 130, height: 130)
-            .background(Color.Medium)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-        
-        
-        
-        */
+
         
         RoundedRectangle(cornerRadius: 10)
             .fill(.red)
@@ -182,6 +173,7 @@ struct QuestionView: View {
                         .foregroundColor(Color.white)
             )
                 )
+            .opacity(opacity)
     }
     func playAudio(file : String) {
             guard let audioFileURL = Bundle.main.url(forResource: file, withExtension: "mp3") else {
@@ -195,39 +187,16 @@ struct QuestionView: View {
                 print("Error playing audio: \(error.localizedDescription)")
             }
         }
-    func menuButton1() -> some View{
-        
-        //>>> MENU >>>
-        Button(action: {
-            
-            withAnimation(.easeInOut){
-                
-                isBack = true
-                nextPage=true
-                
-            }
-            
-        })  {
-            Text("menu")
-                .frame( width: 130,height: 50)
-                .font(.system(size:30,weight:.bold))
-                .foregroundColor(Color.white)
-                .background(Color.Easy)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .offset(y: 40) // Apply the Y offset
-                .offset(x:0)
-        }
-        //<<< MENU <<<
-    }
-    
+ 
     
     func menuButton() -> some View{
         
         Button(action: {
             playAudio(file: "down")
             withAnimation(.easeInOut){
+                timerOn = false
                 isBack = true
-                nextPage=true
+                goNextPage()
             }
         })  {
             ZStack {
@@ -240,6 +209,7 @@ struct QuestionView: View {
           
             }
             .offset(y:40)
+            .opacity(opacity)
             
         }
     }
@@ -250,7 +220,6 @@ struct QuestionView: View {
         if answer == answerRom{
             playAudio(file: answer)
             score+=1
-            
             generateRandoms()
         }else{
             playAudio(file: "incorrect")
@@ -263,6 +232,7 @@ struct QuestionView: View {
             UserDefaults.standard.set(levelProgressKat, forKey: "levelProgressKat")
             questionSymbol = ""
             choiceArray = ["", "", "", ""]
+            timerOn = false
             goNextPage()
             
         }
@@ -272,11 +242,13 @@ struct QuestionView: View {
             UserDefaults.standard.set(levelProgressHir, forKey: "levelProgressHir")
             questionSymbol = ""
             choiceArray = ["", "", "", ""]
+            timerOn = false
             goNextPage()
         }
        else if score == limit && currentLevel != UserDefaults.standard.integer(forKey: "levelProgressHir") || score == limit && currentLevel != UserDefaults.standard.integer(forKey: "levelProgressKat"){
            questionSymbol = ""
            choiceArray = ["", "", "", ""]
+           timerOn = false
            goNextPage()
         }
         
@@ -285,7 +257,9 @@ struct QuestionView: View {
     func startTimer() {
         if timerOn{
             timer?.invalidate() // Stop the timer if it's already running
-            
+            if answerRom != ""{
+                playAudio(file: answerRom)
+            }
             timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { timer in
                 if progress > 0.0{
                     progress -= 0.1 / 10.0 // Adjust the decrement value to control the speed of progress
@@ -309,7 +283,13 @@ struct QuestionView: View {
     }
     
     func goNextPage(){
+        withAnimation(.easeInOut){
+            opacity = 0
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
             nextPage = true
+            
+        }
     }
     
     func generateRandoms(){
