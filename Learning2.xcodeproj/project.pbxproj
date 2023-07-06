@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D006C352A38FE6C007E6647 /* GetLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D006C342A38FE6C007E6647 /* GetLevels.swift */; };
+		0D31144C2A56EB18005C34CF /* LevelsViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D31144B2A56EB18005C34CF /* LevelsViewTest.swift */; };
 		0D6DEEDC2A569D9400AF5E27 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6DEEDB2A569D9400AF5E27 /* AudioPlayer.swift */; };
 		0D6DF0282A56A41100AF5E27 /* incorrect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0D6DEFBB2A56A41000AF5E27 /* incorrect.mp3 */; };
 		0D6DF0292A56A41100AF5E27 /* cho.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0D6DEFBC2A56A41000AF5E27 /* cho.mp3 */; };
@@ -154,6 +155,7 @@
 
 /* Begin PBXFileReference section */
 		0D006C342A38FE6C007E6647 /* GetLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLevels.swift; sourceTree = "<group>"; };
+		0D31144B2A56EB18005C34CF /* LevelsViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelsViewTest.swift; sourceTree = "<group>"; };
 		0D6DEEDB2A569D9400AF5E27 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		0D6DEFBB2A56A41000AF5E27 /* incorrect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incorrect.mp3; sourceTree = "<group>"; };
 		0D6DEFBC2A56A41000AF5E27 /* cho.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cho.mp3; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 				0D9F51F42A373F58009BDEC1 /* Learning2App.swift */,
 				0D9F521F2A373FB9009BDEC1 /* KatHirView.swift */,
 				0D9F522B2A376E7B009BDEC1 /* LevelsView.swift */,
+				0D31144B2A56EB18005C34CF /* LevelsViewTest.swift */,
 				0D9F522D2A37C1F5009BDEC1 /* QuestionView.swift */,
 				0D7C4D6E2A424BE0008FC640 /* LearnView.swift */,
 				0D6DEFBA2A56A41000AF5E27 /* Audio */,
@@ -733,6 +736,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D31144C2A56EB18005C34CF /* LevelsViewTest.swift in Sources */,
 				0D9F522E2A37C1F5009BDEC1 /* QuestionView.swift in Sources */,
 				0D9F52202A373FB9009BDEC1 /* KatHirView.swift in Sources */,
 				0D9F52222A374AAA009BDEC1 /* ColourExtension.swift in Sources */,

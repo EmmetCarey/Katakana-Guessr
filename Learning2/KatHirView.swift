@@ -70,7 +70,7 @@ struct KatHirView: View {
     func KatakanaButton() -> some View{
         Button(action: {
             playAudio(file: correct)
-            
+            isKat = true
             withAnimation(.easeInOut){
                 katPressed = true
                 hirPressed = false

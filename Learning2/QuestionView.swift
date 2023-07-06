@@ -130,9 +130,11 @@ struct QuestionView: View {
     func showTimer() -> some View{
         Button(action: {
             if timerOn{
+                playAudio(file: "down")
                 timerOn=false
                 progress = 0
             }else{
+                playAudio(file: "correct")
                 timerOn = true
                 generateRandoms()
             }
@@ -197,8 +199,9 @@ struct QuestionView: View {
         
         //>>> MENU >>>
         Button(action: {
+            
             withAnimation(.easeInOut){
-                playAudio(file: "swipe")
+                
                 isBack = true
                 nextPage=true
                 
@@ -221,6 +224,7 @@ struct QuestionView: View {
     func menuButton() -> some View{
         
         Button(action: {
+            playAudio(file: "down")
             withAnimation(.easeInOut){
                 isBack = true
                 nextPage=true
@@ -336,6 +340,6 @@ struct QuestionView: View {
 
 struct QuestionView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView(isTest: true, limit: 3, currentLevel: 3, isKat: true, questions: [Info.katNEW1[1],Info.romNEW1[1]])
+        QuestionView(isTest: false, limit: 3, currentLevel: 3, isKat: true, questions: [Info.katNEW1[1],Info.romNEW1[1]])
     }
 }
