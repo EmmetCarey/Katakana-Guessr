@@ -35,19 +35,23 @@ struct KatHirView: View {
         
         ZStack{
             Color.Beige.edgesIgnoringSafeArea(.all)
-            BackgroundView().opacity(0.6)
+            BackgroundView()
+                .opacity(backgroundOpacity)
             
             VStack {
                 Spacer()
-                getButton(label: "Katakana", direction: right, passKat: true)
-                getButton(label: "Hiragana", direction: left, passKat: false)
+                getButton1(label: "Katakana", direction: right, passKat: true)
+                getButton1(label: "Hiragana", direction: left, passKat: false)
                 getButton2(label: "Levels", test: true, direction: left)
                 getButton2(label: "Table", test: false, direction: right)
                 getButton3(label: "Test All", test: true, direction: left)
                 Spacer()
             }
         }.onAppear(){
-            changeOpacity(change: 0.5)
+            withAnimation(.easeInOut(duration: 2.0)){
+                changeOpacity(change: 0.5)
+            }
+            
         }
             .fullScreenCover(isPresented: $nextPage){
                 if infiniteTest {
@@ -62,12 +66,12 @@ struct KatHirView: View {
             }
     }
     
-    func getButton(label: String, direction: CGFloat, passKat: Bool) -> some View {
+    func getButton1(label: String, direction: CGFloat, passKat: Bool) -> some View {
        
         Button(action: {
             
-            playAudio(file: correct)
             isKat = passKat
+            playAudio(file: correct)
             changeOpacity(change: 0.2)
             
             withAnimation(.easeInOut) {
@@ -98,6 +102,7 @@ struct KatHirView: View {
         Button(action:{
             playAudio(file: correct)
             changeOpacity(change: 0)
+            
             withAnimation(.easeInOut(duration: 0.5)){
                 moveButtons()
                 isTest = test
@@ -114,7 +119,6 @@ struct KatHirView: View {
                 .foregroundColor(Color.white)
                 .background(color)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
-               
                 .offset(x:(isMoveButtons) ? buttonOffsetX*direction : 400*direction)
      
         }
