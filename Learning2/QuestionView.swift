@@ -90,7 +90,7 @@ struct QuestionView: View {
                     let index = row * 2 + column
                     
                     Button(action: {
-                        playAudio(file: choiceArray[index])
+                       
                         checkAnswer(answer: choiceArray[index])
                     }) {
                         CustomButton(data: choiceArray[index], isCircle: true, color: Color.Medium, buttonOffsetY: 0, buttonOffsetX: 0)
@@ -198,8 +198,10 @@ struct QuestionView: View {
         //>>> MENU >>>
         Button(action: {
             withAnimation(.easeInOut){
+                playAudio(file: "swipe")
                 isBack = true
                 nextPage=true
+                
             }
             
         })  {
@@ -242,10 +244,12 @@ struct QuestionView: View {
     func checkAnswer(answer: String){
         
         if answer == answerRom{
+            playAudio(file: answer)
             score+=1
             
             generateRandoms()
         }else{
+            playAudio(file: "incorrect")
             score=0
         }
         

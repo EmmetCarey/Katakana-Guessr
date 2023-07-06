@@ -139,6 +139,11 @@ struct LearnView: View {
     func showButton() -> some View{
         
         Button(action: {
+            if show {
+                playAudio(file: "down")
+            }else{
+                playAudio(file: "correct")
+            }
             withAnimation(.easeInOut){
                 show.toggle()
             }
@@ -158,11 +163,12 @@ struct LearnView: View {
                 
         }
     }
-    
+   
     func menuButton() -> some View{
         
         Button(action: {
             
+            playAudio(file: "down")
             showButtonVisible = false
             offsetY = -200
             
@@ -185,6 +191,10 @@ struct LearnView: View {
                     .opacity(opacity)
             }
         }
+    }
+    
+    func playAudio(file: String){
+        AudioPlayer.playAudio(file: file)
     }
 }
 

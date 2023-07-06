@@ -182,6 +182,7 @@ struct LevelsView: View {
    
         ForEach(start..<end) { index in
             Button(action: {
+                playAudio(file: "correct")
                 withAnimation(.easeInOut) {
                     limit = 15
                     levelSelected = index
@@ -217,13 +218,13 @@ struct LevelsView: View {
 
         }
     }
-    
+
     func menuButton() -> some View{
         
-        //>>> MENU >>>
         Button(action: {
+            
             withAnimation(.easeInOut){
-                
+                playAudio(file: "down")
                 isBack = true
                 buttonOffsetY = -400
                 moveButtons = true
@@ -234,17 +235,17 @@ struct LevelsView: View {
             }
             
         })  {
-            Text("menu")
-                .frame( width: 130,height: 50)
-                .font(.system(size:30,weight:.bold))
-                .foregroundColor(Color.white)
-                .background(Color.Easy)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .offset(y: (moveButtons) ? -600 : 0)
-                .offset(x: 0)
-                }
-        
-        //<<< MENU <<<
+            ZStack {
+                Circle()
+                    .fill(Color.Easy)
+                    .frame(width: 40, height: 40)
+                Image(systemName: "chevron.left")
+                    .font(.system(size:20,weight:.bold))
+                    .foregroundColor(.white)
+                    
+            }
+            .offset(y: (moveButtons) ? -600 : 0)
+        }
     }
 
     
@@ -288,6 +289,9 @@ struct LevelsView: View {
         }
     }
     
+    func playAudio(file: String){
+        AudioPlayer.playAudio(file: file)
+    }
     
     struct LevelsView_Previews: PreviewProvider {
         static var previews: some View {
