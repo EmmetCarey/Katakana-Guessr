@@ -1,9 +1,8 @@
 import SwiftUI
-import AVFoundation
 
-
-struct KatHirView2: View {
-    
+struct KatHirView: View {
+    @State private var scaleKatakana: CGFloat = 1.0
+    @State private var scaleHiragana: CGFloat = 1.0
     
     @State private var nextPage = false
     @State private var isKat = false
@@ -30,73 +29,117 @@ struct KatHirView2: View {
     @State private var backgroundOpacity = 0.0
     @State private var correct = "correct"
     @State private var color: Color = Color.Easy
-    
+
     var body: some View {
-        
-        ZStack{
-            Color.Beige.edgesIgnoringSafeArea(.all)
-            BackgroundView()
-                .opacity(backgroundOpacity)
-            
-            VStack {
-                Spacer()
-                getButton1(label: "Katakana", direction: right, passKat: true)
-                getButton1(label: "Hiragana", direction: left, passKat: false)
-                getButton2(label: "Levels", test: true, direction: left)
-                getButton2(label: "Table", test: false, direction: right)
-                getButton3(label: "Test All", test: true, direction: left)
-                Spacer()
-            }
-        }.onAppear(){
-            withAnimation(.easeInOut(duration: 2.0)){
-                changeOpacity(change: 0.5)
-            }
-            
-        }
-            .fullScreenCover(isPresented: $nextPage){
-                if infiniteTest {
-                    QuestionView(isTest: true, limit: 1000, currentLevel: 33, isKat: isKat, questions: getTest(isKat: isKat, levels: (0...UserDefaults.standard.integer(forKey: "levelProgressKat")).map { $0 }))
-                } else if isTest {
-                    LevelsView(isKat: .constant(isKat))
-                } else if isBack {
-                    KatHirView()
-                } else {
-                    LearnView(isKat: $isKat)
+
+            ZStack {
+                Color.Beige.edgesIgnoringSafeArea(.all)
+                BackgroundView()
+                    .opacity(backgroundOpacity)
+                VStack{
+                    Spacer().frame(height: 330)
+                    ZStack{
+                    KatakanaButton()
+                    }.zIndex(1)
+                    
+                    ZStack{
+                       HiraganaButton()
+                    }.zIndex(0)
+                    Spacer().frame(height: 330)
+ 
                 }
+                VStack{
+                    Spacer().frame(height: 330)
+                    getButton2(label: "Levels", test: true, direction: left)
+                    getButton2(label: "Table", test: false, direction: right)
+                    getButton3(label: "Test All", test: true, direction: left)
+                }
+                
+                
+            }.onAppear(){
+                withAnimation(.easeInOut(duration: 2.0)){
+                    changeOpacity(change: 0.5)
+                }
+                
             }
+                .fullScreenCover(isPresented: $nextPage){
+                    if infiniteTest {
+                        QuestionView(isTest: true, limit: 1000, currentLevel: 33, isKat: isKat, questions: getTest(isKat: isKat, levels: (0...UserDefaults.standard.integer(forKey: "levelProgressKat")).map { $0 }))
+                    } else if isTest {
+                        LevelsView(isKat: .constant(isKat))
+                    } else if isBack {
+                        KatHirView()
+                    } else {
+                        LearnView(isKat: $isKat)
+                    }
+                }
+            
+        
     }
-    
-    func getButton1(label: String, direction: CGFloat, passKat: Bool) -> some View {
-       
+    func KatakanaButton() -> some View{
         Button(action: {
-            
-            isKat = passKat
             playAudio(file: correct)
-            changeOpacity(change: 0.2)
             
-            withAnimation(.easeInOut) {
-                if passKat {
-                    katPressed = true
-                    isMoveButtons = true
+            withAnimation(.easeInOut){
+                katPressed = true
+                hirPressed = false
+                isMoveButtons = true
+                if scaleHiragana == 0.5 {
+                    scaleHiragana = 1.0
+                    scaleKatakana = 0.5
                 } else {
-                    hirPressed = true
-                    isMoveButtons = true
+                    scaleKatakana = 1.0
+                    scaleHiragana = 0.5
                 }
             }
-        
         }) {
-            Text(label)
+            Text("Katakana")
                 .frame(width: 260, height: 70)
                 .font(.system(size: 40, weight: .bold))
                 .foregroundColor(Color.white)
                 .background(Color.Medium)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
+                .scaleEffect(scaleKatakana)
                 .offset(x: finalMove)
-                .offset(y: isMoveButtons ? getOffset(isKat: passKat) : 0)
+                .opacity(katPressed ? 1 : (hirPressed ? 0.5 : 1))
         }
-        .disabled(isMoveButtons)
+        .disabled(scaleHiragana == 0.5)
+        //.offset(y: hirPressed ? 0 : (katPressed ? 0:0))
+        .position(x: UIScreen.main.bounds.width / 2, y: hirPressed ? 20: (katPressed ? 95 : 0))
     }
+    
+    func HiraganaButton() -> some View{
+        Button(action: {
+            playAudio(file: correct)
+           
+            withAnimation(.easeInOut){
+                katPressed = false
+                hirPressed = true
+                isMoveButtons = true
+                if scaleKatakana == 1.0 {
+                    scaleKatakana = 0.5
+                    scaleHiragana = 1.0
+                } else {
+                    scaleHiragana = 0.5
+                    scaleKatakana = 1.0
+                }
+            }
 
+        }) {
+            Text("Hiragana")
+                .frame(width: 260, height: 70)
+                .font(.system(size: 40, weight: .bold))
+                .foregroundColor(Color.white)
+                .background(Color.Medium)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .scaleEffect(scaleHiragana)
+                .offset(x: finalMove)
+                .opacity(hirPressed ? 1 : (katPressed ? 0.5 : 1))
+        }
+        .disabled(scaleKatakana == 0.5)
+        //.offset(y: katPressed ? 0 : (hirPressed ? 30 : 0))
+        .position(x: UIScreen.main.bounds.width / 2, y: katPressed ? -75: (hirPressed ? 0 : 0))
+    }
     func getButton2(label: String, test: Bool, direction: CGFloat) -> some View{
         
         Button(action:{
@@ -175,12 +218,11 @@ struct KatHirView2: View {
     func moveButtons(){
         buttonOffsetX = 400
     }
-}
     
-struct KatHirView_Previews2: PreviewProvider {
+}
+
+struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        KatHirView2()
+        KatHirView()
     }
 }
-
-
