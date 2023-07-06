@@ -33,9 +33,10 @@ struct KatHirView: View {
     var body: some View {
 
             ZStack {
+                
                 Color.Beige.edgesIgnoringSafeArea(.all)
-                BackgroundView()
-                    .opacity(backgroundOpacity)
+                BackgroundView().opacity(backgroundOpacity)
+                
                 VStack{
                     KatakanaButton()
                     HiraganaButton()
@@ -51,9 +52,6 @@ struct KatHirView: View {
                         backgroundOpacity = 0.8 //
                     }
                 }
-                
-               
-                
             }
                 .fullScreenCover(isPresented: $nextPage){
                     if infiniteTest {
@@ -67,6 +65,7 @@ struct KatHirView: View {
             
         
     }
+    
     func KatakanaButton() -> some View{
         Button(action: {
             playAudio(file: correct)
@@ -84,7 +83,7 @@ struct KatHirView: View {
                 }
             }
         }) {
-            Text("Katakana")
+            Text("Katakana ア")
                 .frame(width: 260, height: 70)
                 .font(.system(size: 40, weight: .bold))
                 .foregroundColor(Color.white)
@@ -117,7 +116,7 @@ struct KatHirView: View {
             }
 
         }) {
-            Text("Hiragana")
+            Text("Hiragana あ")
                 .frame(width: 260, height: 70)
                 .font(.system(size: 40, weight: .bold))
                 .foregroundColor(Color.white)
@@ -131,6 +130,7 @@ struct KatHirView: View {
         .offset(y: katPressed ? -75: (hirPressed ? 0 : 100))
         //.position(x: UIScreen.main.bounds.width / 2, y: katPressed ? -75: (hirPressed ? 0 : 0))
     }
+    
     func getButton2(label: String, test: Bool, direction: CGFloat) -> some View{
         
         Button(action:{
@@ -152,7 +152,7 @@ struct KatHirView: View {
                 .font(.system(size: fontSize , weight: .bold))
                 .foregroundColor(Color.white)
                 .background(color)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .clipShape(RoundedRectangle(cornerRadius: 17))
                 .offset(x:(isMoveButtons) ? buttonOffsetX*direction : 400*direction)
      
         }.disabled(!isMoveButtons)
@@ -180,7 +180,7 @@ struct KatHirView: View {
                 .font(.system(size: fontSize , weight: .bold))
                 .foregroundColor(Color.white)
                 .background(color)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .clipShape(RoundedRectangle(cornerRadius: 17))
                
                 .offset(x:(isMoveButtons) ? buttonOffsetX*direction : 400*direction)
      
