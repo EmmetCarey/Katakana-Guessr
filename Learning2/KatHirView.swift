@@ -37,23 +37,16 @@ struct KatHirView: View {
                 BackgroundView()
                     .opacity(backgroundOpacity)
                 VStack{
-                    Spacer().frame(height: 330)
-                    ZStack{
                     KatakanaButton()
-                    }.zIndex(1)
-                    
-                    ZStack{
-                       HiraganaButton()
-                    }.zIndex(0)
-                    Spacer().frame(height: 330)
- 
-                }
-                VStack{
-                    Spacer().frame(height: 330)
+                    HiraganaButton()
+                    Spacer().frame(height: 50)
                     getButton2(label: "Levels", test: true, direction: left)
                     getButton2(label: "Table", test: false, direction: right)
                     getButton3(label: "Test All", test: true, direction: left)
                 }
+                
+                
+            
                 
                 
             }.onAppear(){
@@ -67,8 +60,6 @@ struct KatHirView: View {
                         QuestionView(isTest: true, limit: 1000, currentLevel: 33, isKat: isKat, questions: getTest(isKat: isKat, levels: (0...UserDefaults.standard.integer(forKey: "levelProgressKat")).map { $0 }))
                     } else if isTest {
                         LevelsView(isKat: .constant(isKat))
-                    } else if isBack {
-                        KatHirView()
                     } else {
                         LearnView(isKat: $isKat)
                     }
@@ -104,8 +95,8 @@ struct KatHirView: View {
                 .opacity(katPressed ? 1 : (hirPressed ? 0.5 : 1))
         }
         .disabled(scaleHiragana == 0.5)
-        //.offset(y: hirPressed ? 0 : (katPressed ? 0:0))
-        .position(x: UIScreen.main.bounds.width / 2, y: hirPressed ? 20: (katPressed ? 95 : 0))
+        .offset(y: hirPressed ? 0: (katPressed ? 95 : 100))
+        //.position(x: UIScreen.main.bounds.width / 2, y: hirPressed ? 20: (katPressed ? 95 : 0))
     }
     
     func HiraganaButton() -> some View{
@@ -137,8 +128,8 @@ struct KatHirView: View {
                 .opacity(hirPressed ? 1 : (katPressed ? 0.5 : 1))
         }
         .disabled(scaleKatakana == 0.5)
-        //.offset(y: katPressed ? 0 : (hirPressed ? 30 : 0))
-        .position(x: UIScreen.main.bounds.width / 2, y: katPressed ? -75: (hirPressed ? 0 : 0))
+        .offset(y: katPressed ? -75: (hirPressed ? 0 : 100))
+        //.position(x: UIScreen.main.bounds.width / 2, y: katPressed ? -75: (hirPressed ? 0 : 0))
     }
     func getButton2(label: String, test: Bool, direction: CGFloat) -> some View{
         
@@ -164,7 +155,7 @@ struct KatHirView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .offset(x:(isMoveButtons) ? buttonOffsetX*direction : 400*direction)
      
-        }
+        }.disabled(!isMoveButtons)
         
     }
     
