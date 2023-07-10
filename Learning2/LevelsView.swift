@@ -110,6 +110,7 @@ struct LevelsView: View {
             }
             .onAppear{
                 initializeLevelProgress(isKat: isKat, isReset:isResetKat)
+                print(getJSON())
             }
                 
             //ZStack

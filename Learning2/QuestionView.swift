@@ -71,6 +71,7 @@ struct QuestionView: View {
                 if isBack{
                     KatHirView()
                 }
+                
             }
         }//ZStack
         .onAppear{
@@ -221,9 +222,12 @@ struct QuestionView: View {
             playAudio(file: answer)
             score+=1
             generateRandoms()
+            changeJSON(searchString: answerRom, isPlus: true)
+            
         }else{
             playAudio(file: "incorrect")
             score=0
+            changeJSON(searchString: answerRom, isPlus: false)
         }
         
         if score == limit && isKat && currentLevel == UserDefaults.standard.integer(forKey: "levelProgressKat"){
