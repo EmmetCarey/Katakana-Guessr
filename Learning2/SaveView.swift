@@ -9,22 +9,10 @@ import SwiftUI
 
 struct SaveView: View {
     var body: some View {
-       
-       
         VStack{
-            
-        }.onAppear(){
-            
-            
-            resetJSON()
-            //let index = Info.normalDist.firstIndex(of: getIndex())
-            changeJSON(searchString: "a", isPlus: true)
-            print(getWeight(searchString: "a"))
-            //print(getJSON())
-            }
         }
-        
     }
+}
     
     func getIndex( searchString: String) -> [Int]{
         if let rowIndex = Info.romList.firstIndex(where: { $0.contains(searchString) }),
@@ -48,7 +36,6 @@ struct SaveView: View {
           
         }
         return array2[index[0]][index[1]]
-        //return array2[[index[0]][index[1]]]
     }
     
         
@@ -63,30 +50,11 @@ struct SaveView: View {
                 
                 
                 var index = getIndex(searchString: searchString)
-                
-                print(index)
-                /*
-                array2[index[0]][index[1]] = isPlus ? String(format: "%.2f",Double(array2[index[0]][index[1]])! + modifier) : String(format: "%.2f",Double(array2[index[0]][index[1]])! - modifier)
-               */
-                
-               
                 let index1 = Int(Info.normalDist.firstIndex(of: array2[index[0]][index[1]])!)
-                
-                //print(Info.normalDist.firstIndex(of:array2[index[0]][index[1]]))
                 let index2 = isPlus ? (index1 == 92 ? index1 : index1 + 1) : (index1 == 0 ? index1 : index1 - 1)
                 
-                // normalDISt has 92 values
-
-                /*
-                if index2 != nil || index1 != "0.000" {
-                    array2[index[0]][index[1]] = Info.normalDist[index2]
-                }else{
-                    array2[index[0]][index[1]] = Info.normalDist[index1]
-                }
-                 */
                 array2[index[0]][index[1]] = Info.normalDist[index2]
                 
-               
                 overwriteArrayToJson(array2, fileName: "array.json")
                 
             }

@@ -123,7 +123,7 @@
 		0D9F51F52A373F58009BDEC1 /* Learning2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F51F42A373F58009BDEC1 /* Learning2App.swift */; };
 		0D9F51F92A373F5B009BDEC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D9F51F82A373F5B009BDEC1 /* Assets.xcassets */; };
 		0D9F51FD2A373F5B009BDEC1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D9F51FC2A373F5B009BDEC1 /* Preview Assets.xcassets */; };
-		0D9F52072A373F5C009BDEC1 /* Learning2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F52062A373F5C009BDEC1 /* Learning2Tests.swift */; };
+		0D9F52072A373F5C009BDEC1 /* Learning2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F52062A373F5C009BDEC1 /* Learning2UITests.swift */; };
 		0D9F52112A373F5C009BDEC1 /* Learning2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F52102A373F5C009BDEC1 /* Learning2UITests.swift */; };
 		0D9F52132A373F5C009BDEC1 /* Learning2UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F52122A373F5C009BDEC1 /* Learning2UITestsLaunchTests.swift */; };
 		0D9F52202A373FB9009BDEC1 /* KatHirView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F521F2A373FB9009BDEC1 /* KatHirView.swift */; };
@@ -275,7 +275,7 @@
 		0D9F51FA2A373F5B009BDEC1 /* Learning2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Learning2.entitlements; sourceTree = "<group>"; };
 		0D9F51FC2A373F5B009BDEC1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0D9F52022A373F5C009BDEC1 /* Learning2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Learning2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0D9F52062A373F5C009BDEC1 /* Learning2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Learning2Tests.swift; sourceTree = "<group>"; };
+		0D9F52062A373F5C009BDEC1 /* Learning2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Learning2UITests.swift; sourceTree = "<group>"; };
 		0D9F520C2A373F5C009BDEC1 /* Learning2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Learning2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D9F52102A373F5C009BDEC1 /* Learning2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Learning2UITests.swift; sourceTree = "<group>"; };
 		0D9F52122A373F5C009BDEC1 /* Learning2UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Learning2UITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -436,7 +436,7 @@
 			children = (
 				0D9F51F32A373F58009BDEC1 /* Learning2 */,
 				0D9F52052A373F5C009BDEC1 /* Learning2Tests */,
-				0D9F520F2A373F5C009BDEC1 /* Learning2UITests */,
+				0D9F520F2A373F5C009BDEC1 /* Katakana_GuessrUITests */,
 				0D9F51F22A373F58009BDEC1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -488,18 +488,18 @@
 		0D9F52052A373F5C009BDEC1 /* Learning2Tests */ = {
 			isa = PBXGroup;
 			children = (
-				0D9F52062A373F5C009BDEC1 /* Learning2Tests.swift */,
+				0D9F52062A373F5C009BDEC1 /* Learning2UITests.swift */,
 			);
 			path = Learning2Tests;
 			sourceTree = "<group>";
 		};
-		0D9F520F2A373F5C009BDEC1 /* Learning2UITests */ = {
+		0D9F520F2A373F5C009BDEC1 /* Katakana_GuessrUITests */ = {
 			isa = PBXGroup;
 			children = (
 				0D9F52102A373F5C009BDEC1 /* Learning2UITests.swift */,
 				0D9F52122A373F5C009BDEC1 /* Learning2UITestsLaunchTests.swift */,
 			);
-			path = Learning2UITests;
+			path = Katakana_GuessrUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -762,7 +762,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D9F52072A373F5C009BDEC1 /* Learning2Tests.swift in Sources */,
+				0D9F52072A373F5C009BDEC1 /* Learning2UITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,22 +12,29 @@ struct KatHirView: View {
     @State private var isMoveButtons = false
     @State private var hirPressed = false
     @State private var katPressed = false
+    
     @State private var finalMove : CGFloat = 0
     @State private var buttonOffsetX: CGFloat = 0
+    
     @State private var width: CGFloat = 150
     @State private var height: CGFloat = 50
     @State private var fontSize: CGFloat = 30
+    
     @State private var offset: CGFloat = 0
     @State private var left: CGFloat = -1
     @State private var right: CGFloat = 1
     @State private var up: CGFloat = -1
     @State private var down: CGFloat = 1
+    
     @State private var katOffset: CGFloat = 0
     @State private var hirOffset: CGFloat = 0
     @State private var hirOffsetOnHir: CGFloat = -1
     @State private var hirOffsetOnKat: CGFloat = -1
+    
     @State private var backgroundOpacity = 0.0
+    
     @State private var correct = "correct"
+    
     @State private var color: Color = Color.Easy
 
     var body: some View {
@@ -38,27 +45,35 @@ struct KatHirView: View {
                 BackgroundView().opacity(backgroundOpacity)
                 
                 VStack{
+                    
                     KatakanaButton()
                     HiraganaButton()
+                    
                     Spacer().frame(height: 50)
+                    
                     getButton2(label: "Levels", test: true, direction: left)
                     getButton2(label: "Table", test: false, direction: right)
                     getButton3(label: "Test All", test: true, direction: left)
                 }    
             }.onAppear(){
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
-                    withAnimation(.easeInOut(duration: 1)) {
-                        backgroundOpacity = 0.8 //
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){ //after 0.3 seconds
+                    withAnimation(.easeInOut(duration: 1)) {           //for duration 1 second
+                        backgroundOpacity = 0.8                        //change background letter opacity
                     }
                 }
             }
                 .fullScreenCover(isPresented: $nextPage){
+                    
                     if infiniteTest {
+                        
                         QuestionView(isTest: true, limit: 1000, currentLevel: 33, isKat: isKat, questions: getTest(isKat: isKat, levels: (0...UserDefaults.standard.integer(forKey: "levelProgressKat")).map { $0 }))
+                        
                     } else if isTest {
+                        
                         LevelsView(isKat: .constant(isKat))
                     } else {
+                        
                         LearnView(isKat: $isKat)
                     }
                 }
@@ -67,13 +82,16 @@ struct KatHirView: View {
     }
     
     func KatakanaButton() -> some View{
+        
         Button(action: {
             playAudio(file: correct)
             isKat = true
             withAnimation(.easeInOut){
+                
                 katPressed = true
                 hirPressed = false
                 isMoveButtons = true
+                
                 if scaleHiragana == 0.5 {
                     scaleHiragana = 1.0
                     scaleKatakana = 0.5
@@ -95,13 +113,14 @@ struct KatHirView: View {
         }
         .disabled(scaleHiragana == 0.5)
         .offset(y: hirPressed ? 0: (katPressed ? 95 : 100))
-        //.position(x: UIScreen.main.bounds.width / 2, y: hirPressed ? 20: (katPressed ? 95 : 0))
     }
     
     func HiraganaButton() -> some View{
         Button(action: {
+            
             playAudio(file: correct)
             isKat = false
+            
             withAnimation(.easeInOut){
                 katPressed = false
                 hirPressed = true
@@ -128,7 +147,6 @@ struct KatHirView: View {
         }
         .disabled(scaleKatakana == 0.5)
         .offset(y: katPressed ? -75: (hirPressed ? 0 : 100))
-        //.position(x: UIScreen.main.bounds.width / 2, y: katPressed ? -75: (hirPressed ? 0 : 0))
     }
     
     func getButton2(label: String, test: Bool, direction: CGFloat) -> some View{

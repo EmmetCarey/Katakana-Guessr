@@ -11,24 +11,31 @@ import AVFoundation
 struct QuestionView: View {
     
     @State var audioPlayer: AVAudioPlayer?
-    @State private var nextPage : Bool = false
+    
     @State private var questionSymbol = ""
     @State private var answerRom = ""
     @State private var choiceArray: [String] = ["", "", "", ""]
-    @State private var score = 0
+    
+    @State private var nextPage : Bool = false
     @State private var isBack = false
-    @State private var progress: CGFloat = 1.0
-    @State private var timer: Timer?
     @State private var timerOn: Bool = true
+    
+    
+    @State private var score = 0
+    @State private var progress: CGFloat = 1.0
+    @State private var backgroundOpacity: CGFloat = 1
+    @State private var opacity: CGFloat = 1
+    
+    @State private var weights : [String] = []
+    @State private var timer: Timer?
     @State var isTest: Bool
-    @State var backgroundOpacity: CGFloat = 1
     let barHeight: CGFloat = 50.0
     let barWidth: CGFloat = 300.0
     let limit : Int
     var currentLevel : Int
     var isKat: Bool
     var questions: [[String]]
-    @State var opacity: CGFloat = 1
+    
     
     var body: some View {
         
@@ -75,9 +82,11 @@ struct QuestionView: View {
             }
         }//ZStack
         .onAppear{
+            
             startTimer()
             generateRandoms()
-            print(UserDefaults.standard.integer(forKey: "levelProgressKat"))
+            
+         
         }
     }//var body: some View
     
@@ -156,6 +165,7 @@ struct QuestionView: View {
            }
            .padding(10)
     }
+    
     func showQuestion() -> some View{
 
         
@@ -176,6 +186,7 @@ struct QuestionView: View {
                 )
             .opacity(opacity)
     }
+    
     func playAudio(file : String) {
             guard let audioFileURL = Bundle.main.url(forResource: file, withExtension: "mp3") else {
                 return
@@ -222,12 +233,12 @@ struct QuestionView: View {
             playAudio(file: answer)
             score+=1
             generateRandoms()
-            changeJSON(searchString: answerRom, isPlus: true)
+            changeJSON(searchString: answerRom, isPlus: false)
             
         }else{
             playAudio(file: "incorrect")
             score=0
-            changeJSON(searchString: answerRom, isPlus: false)
+            changeJSON(searchString: answerRom, isPlus: true)
         }
         
         if score == limit && isKat && currentLevel == UserDefaults.standard.integer(forKey: "levelProgressKat"){
@@ -268,11 +279,13 @@ struct QuestionView: View {
                 if progress > 0.0{
                     progress -= 0.1 / 10.0 // Adjust the decrement value to control the speed of progress
                 } else {
-                   
                     progress = 1.0 // Reset progress to 1.0 when it reaches 0.0
+                    
                     generateRandoms()
                     if score > 0{
                         score-=1
+                        weights = getWeights()
+                        
                     }
                     
                 }
@@ -295,9 +308,21 @@ struct QuestionView: View {
             
         }
     }
-    
+    func getWeights()->[String]{
+        var weights: [String] = []
+        
+        for symbol in questions[1]{
+            weights.append(getWeight(searchString: symbol))
+        }
+        return weights
+        
+    }
     func generateRandoms(){
+        
+        weights = getWeights()
+        
         resetProgress()
+        
         let randomIndices = questions[0].indices.shuffled().prefix(4)
         
         let resultArray = randomIndices.map { index in
@@ -306,9 +331,47 @@ struct QuestionView: View {
             }
             return questions[1][index]
         }
-    
-        answerRom = resultArray.randomElement() ?? ""
-        print(answerRom)
+        
+        var newletters : [String] = [questions[0][randomIndices[0]],
+                                     questions[0][randomIndices[1]],
+                                     questions[0][randomIndices[2]],
+                                     questions[0][randomIndices[3]]]
+       
+        
+        let letters = newletters
+        
+        // Convert weights to floats
+        let floatWeights = weights.map { Float($0)! }
+
+        // Calculate cumulative sum
+        var cumulativeSum: [Float] = [0]
+        for i in 0..<floatWeights.count {
+            cumulativeSum.append(cumulativeSum[i] + floatWeights[i])
+        }
+        // Generate a random number
+        let randomNumber = Float.random(in: 0...1)
+
+        // Choose an element using weights as probabilities
+        var chosenLetter: String?
+        for (index, cumulativeWeight) in cumulativeSum.enumerated() {
+            if randomNumber <= cumulativeWeight {
+                chosenLetter = letters[index]
+                break
+            }
+        }
+        print(weights)
+        print(questions[0])
+        print(chosenLetter)
+        
+        //print("CHOSEN")
+        let hi = isKat ? Info.katList.reduce([],+).firstIndex(of: chosenLetter!) : Info.hirList.reduce([],+).firstIndex(of: chosenLetter!) 
+        //print(hi)
+        questionSymbol = chosenLetter!
+        var t = Info.romList.reduce([],+)
+        //print(t[hi!])
+        answerRom = t[hi!]
+        //print(weights)
+        //print(answerRom)
         if let index = questions[1].firstIndex(of: answerRom) {
             questionSymbol = questions[0][index]
         } else {
@@ -316,7 +379,7 @@ struct QuestionView: View {
         }
        
         choiceArray = resultArray
-        print(choiceArray,"dfghjkhgf")
+        
         
         
     }
