@@ -47,6 +47,7 @@ struct KatHirView: View {
                 VStack{
                     
                     KatakanaButton()
+                    Spacer().frame(height: 5)
                     HiraganaButton()
                     
                     Spacer().frame(height: 50)
@@ -56,7 +57,7 @@ struct KatHirView: View {
                     getButton3(label: "Test All", test: true, direction: left)
                 }    
             }.onAppear(){
-                
+               
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){ //after 0.3 seconds
                     withAnimation(.easeInOut(duration: 1)) {           //for duration 1 second
                         backgroundOpacity = 0.8                        //change background letter opacity

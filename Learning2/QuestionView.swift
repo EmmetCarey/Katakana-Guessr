@@ -359,9 +359,6 @@ struct QuestionView: View {
                 break
             }
         }
-        print(weights)
-        print(questions[0])
-        print(chosenLetter)
         
         //print("CHOSEN")
         let hi = isKat ? Info.katList.reduce([],+).firstIndex(of: chosenLetter!) : Info.hirList.reduce([],+).firstIndex(of: chosenLetter!) 

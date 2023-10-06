@@ -13,12 +13,14 @@ struct SwiftUIView: View {
         VStack{
             Button(action: {
                
-                
+                resetJSON()
                 
             }){Text("add")}
             
             Button(action: {
                 resetJSON()
+                print("add")
+                
                 
                     
             }){Text("reset")}

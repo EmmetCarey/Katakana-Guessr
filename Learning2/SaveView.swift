@@ -25,9 +25,9 @@ struct SaveView: View {
     }
     
     func getWeight(searchString: String)->String{
+        
         let index = getIndex(searchString: searchString)
         var array2 : [[String]] = [[]]
-        
         if let retrievedArray = retrieveArrayFromJson(fileName: "array.json") {
             for subArray in retrievedArray {
                 array2.append(subArray)
@@ -35,11 +35,15 @@ struct SaveView: View {
             array2.removeFirst()
           
         }
+        
+       
         return array2[index[0]][index[1]]
+        
     }
     
         
     func changeJSON(searchString : String, isPlus: Bool){
+        
             var array2 : [[String]] = [[]]
             
             if let retrievedArray = retrieveArrayFromJson(fileName: "array.json") {
@@ -71,6 +75,8 @@ struct SaveView: View {
             }
             array2.removeFirst()
           
+        }else{
+            resetJSON()
         }
         return array2
     }
@@ -131,9 +137,11 @@ struct SaveView: View {
             try jsonData.write(to: fileURL!)
             
             print("Array overwritten to JSON successfully.")
+            print("File saved to: \(fileURL!.path)")
         } catch {
             print("Error overwriting array to JSON: \(error.localizedDescription)")
         }
+        
     }
 
     
